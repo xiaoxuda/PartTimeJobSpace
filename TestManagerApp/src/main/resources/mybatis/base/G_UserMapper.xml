@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据库基本操作 -->
+<mapper namespace="cn.orditech.dao.impl.UserDaoImpl">
+    <sql id="columnMap">
+            id as id,
+            acount as acount,
+            password as password,
+            name as name,
+            sex as sex,
+            department as department,
+            type as type,
+            gmt_create as gmtCreate,
+            gmt_modified as gmtModified
+    </sql>
+
+    <insert id="insert" parameterType="cn.orditech.entity.User">
+        INSERT INTO `user` (
+            id ,
+            acount ,
+            password ,
+            name ,
+            sex ,
+            department ,
+            type ,
+            gmt_create ,
+            gmt_modified 
+        ) VALUES (
+            #{id} ,
+            #{acount} ,
+            #{password} ,
+            #{name} ,
+            #{sex} ,
+            #{department} ,
+            #{type} ,
+            #{gmtCreate} ,
+            #{gmtModified} 
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM `user`
+        WHERE
+            id = #{id} 
+    </delete>
+    
+    <update id="update" parameterType="cn.orditech.entity.User">
+        UPDATE `user` 
+        SET
+            acount = #{acount} ,
+            password = #{password} ,
+            name = #{name} ,
+            sex = #{sex} ,
+            department = #{department} ,
+            type = #{type} ,
+            gmt_create = #{gmtCreate} ,
+            gmt_modified = #{gmtModified} 
+        WHERE
+            id = #{id} 
+    </update>
+    
+    <update id="updateSelective" parameterType="cn.orditech.entity.User">
+        UPDATE `user`
+        SET
+            id = #{id} 
+            <if test="acount!=null" >,acount = #{acount}</if>
+            <if test="password!=null" >,password = #{password}</if>
+            <if test="name!=null" >,name = #{name}</if>
+            <if test="sex!=null" >,sex = #{sex}</if>
+            <if test="department!=null" >,department = #{department}</if>
+            <if test="type!=null" >,type = #{type}</if>
+            <if test="gmtCreate!=null" >,gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" >,gmt_modified = #{gmtModified}</if>
+        WHERE 
+            id = #{id} 
+    </update>
+    
+    <select id="selectOne" resultType="cn.orditech.entity.User">
+        SELECT <include refid="columnMap"></include>
+        FROM `user`
+        WHERE 
+            id = #{id} 
+    </select>
+    
+    <select id="selectList" resultType="cn.orditech.entity.User">
+        SELECT <include refid="columnMap"></include>
+        FROM `user`
+        WHERE 1=1
+            <if test="id!=null" > AND id = #{id}</if>
+            <if test="acount!=null" > AND acount = #{acount}</if>
+            <if test="password!=null" > AND password = #{password}</if>
+            <if test="name!=null" > AND name = #{name}</if>
+            <if test="sex!=null" > AND sex = #{sex}</if>
+            <if test="department!=null" > AND department = #{department}</if>
+            <if test="type!=null" > AND type = #{type}</if>
+            <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
+    </select>
+</mapper>
+
