@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * Created by kimi on 2017/3/25.
  */
@@ -50,5 +52,13 @@ public class QuestionEditController {
             result = JsonResult.failResult (e.getMessage ());
         }
         return JSONObject.toJSONString(result);
+    }
+
+    @RequestMapping("/questionList")
+    public String questionList(Model model){
+        List<Question> questionList = questionService.selectList (new Question ());
+        model.addAttribute ("questionList",questionList);
+
+        return "question_list";
     }
 }

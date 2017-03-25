@@ -11,6 +11,8 @@
             title as title,
             options as options,
             answer as answer,
+            score as score,
+            deleted as deleted,
             gmt_create as gmtCreate,
             gmt_modified as gmtModified
     </sql>
@@ -22,6 +24,7 @@
             title ,
             options ,
             answer ,
+            score ,
             gmt_create ,
             gmt_modified 
         ) VALUES (
@@ -30,16 +33,19 @@
             #{title} ,
             #{options} ,
             #{answer} ,
+            #{score} ,
             #{gmtCreate} ,
             #{gmtModified} 
         )
     </insert>
 
-    <delete id="delete">
-        DELETE FROM `question`
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE `question`
+        SET
+        deleted = #{deleted}
         WHERE
-            id = #{id} 
-    </delete>
+        id = #{id}
+    </update>
     
     <update id="update" parameterType="cn.orditech.entity.Question">
         UPDATE `question` 
@@ -48,6 +54,7 @@
             title = #{title} ,
             options = #{options} ,
             answer = #{answer} ,
+            score = #{score} ,
             gmt_create = #{gmtCreate} ,
             gmt_modified = #{gmtModified} 
         WHERE
@@ -62,6 +69,7 @@
             <if test="title!=null" >,title = #{title}</if>
             <if test="options!=null" >,options = #{options}</if>
             <if test="answer!=null" >,answer = #{answer}</if>
+            <if test="score!=null" >,score = #{score}</if>
             <if test="gmtCreate!=null" >,gmt_create = #{gmtCreate}</if>
             <if test="gmtModified!=null" >,gmt_modified = #{gmtModified}</if>
         WHERE 
@@ -78,12 +86,13 @@
     <select id="selectList" resultType="cn.orditech.entity.Question">
         SELECT <include refid="columnMap"></include>
         FROM `question`
-        WHERE 1=1
+        WHERE deleted = false
             <if test="id!=null" > AND id = #{id}</if>
             <if test="type!=null" > AND type = #{type}</if>
             <if test="title!=null" > AND title = #{title}</if>
             <if test="options!=null" > AND options = #{options}</if>
             <if test="answer!=null" > AND answer = #{answer}</if>
+            <if test="score!=null" > AND score = #{score}</if>
             <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
             <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
     </select>

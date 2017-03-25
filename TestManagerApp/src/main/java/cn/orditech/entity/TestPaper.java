@@ -11,19 +11,23 @@ public class TestPaper implements Serializable {
     /** 
      * id 
      **/
-    private java.lang.Long id;
+    private Long id;
     /** 
      * 试卷描述 
      **/
-    private java.lang.String title;
+    private String title;
     /** 
      * 试题集合，支持分数定制，json结构[{id:1,score:2},{id:2,score:2}] 
      **/
-    private java.lang.String quessions;
+    private String quessions;
     /** 
      * 分数 
      **/
-    private java.lang.Integer score;
+    private Integer score;
+    /** 
+     * 是否已删除，0：否，1：是 
+     **/
+    private Boolean deleted;
     /** 
      * gmtCreate 
      **/
@@ -33,32 +37,39 @@ public class TestPaper implements Serializable {
      **/
     private Date gmtModified;
 
-    public void setId(java.lang.Long value) {
+    public void setId(Long value) {
         this.id = value;
     }
-    public java.lang.Long getId() {
+    public Long getId() {
         return this.id;
     }
     
-    public void setTitle(java.lang.String value) {
+    public void setTitle(String value) {
         this.title = value;
     }
-    public java.lang.String getTitle() {
+    public String getTitle() {
         return this.title;
     }
     
-    public void setQuessions(java.lang.String value) {
+    public void setQuessions(String value) {
         this.quessions = value;
     }
-    public java.lang.String getQuessions() {
+    public String getQuessions() {
         return this.quessions;
     }
     
-    public void setScore(java.lang.Integer value) {
+    public void setScore(Integer value) {
         this.score = value;
     }
-    public java.lang.Integer getScore() {
+    public Integer getScore() {
         return this.score;
+    }
+    
+    public void setDeleted(Boolean value) {
+        this.deleted = value;
+    }
+    public Boolean getDeleted() {
+        return this.deleted;
     }
     
     public void setGmtCreate(Date value) {

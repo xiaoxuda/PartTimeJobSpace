@@ -27,6 +27,10 @@
         <label for="questionTitle" class="control-label">试题描述</label>
         <textarea id="questionTitle" name="title" class="form-control" rows="3"></textarea>
     </div>
+    <div class="form-group">
+        <label for="questionScore" class="control-label">默认分数</label>
+        <input type="number" id="questionScore" name="score" class="form-control"/>
+    </div>
     <div id="questiontype_1" class="question-type form-group" style="display:none;">
         <label class="control-label">可选项(请选中正确答案)</label>
         <div class="input-group">
@@ -92,6 +96,7 @@ $(function(){
         $("#questionType option[value='"+question.type+"']").click();
         $("#questionType").attr("disabled",true);
         $("#questionTitle").val(question.title);
+        $("#questionScore").val(question.score);
         var options = JSON.parse(question.options);
         $("#questiontype_"+question.type+" .option").each(function(){
             var mark = $(this).data("mark");
@@ -118,15 +123,21 @@ $(function(){
     function parseParam(){
         var id = $("#questionId").val();
 
+        var type = $("#questionType").val();
+        if(type==""){
+            alert("请选择试题类型");
+            return;
+        }
+
         var title = $("#questionTitle").val();
         if(title==""){
             alert("请完善试题描述");
             return;
         }
 
-        var type = $("#questionType").val();
-        if(type==""){
-            alert("请选择试题类型");
+        var score = $("#questionScore").val();
+        if(score==""){
+            alert("请完善试题分数");
             return;
         }
 
@@ -161,6 +172,7 @@ $(function(){
             id:id,
             type:type,
             title:title,
+            score:score,
             options:options,
             answer:answer
         };

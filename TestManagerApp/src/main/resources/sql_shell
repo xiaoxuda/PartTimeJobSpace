@@ -35,17 +35,18 @@ CREATE TABLE `department` (
 -- ----------------------------
 -- Table structure for `question`
 -- ----------------------------
-DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `type` int(8) NOT NULL COMMENT '题型，(1:选择，2:判断)',
   `title` varchar(255) NOT NULL COMMENT '问题描述',
   `options` varchar(1000) DEFAULT NULL COMMENT '答案集合，json结构，[{code:1,desc:''aaaa''},{code:2,desc:''aaaa''}]',
   `answer` char(8) NOT NULL COMMENT '正确答案,对应options中的code',
+  `score` int(8) NOT NULL DEFAULT '0' COMMENT '默认分数',
+  `deleted` bit(8) NOT NULL DEFAULT b'0' COMMENT '是否已删除，0：否，1：是',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8
 
 -- ----------------------------
 -- Records of question
@@ -54,16 +55,16 @@ CREATE TABLE `question` (
 -- ----------------------------
 -- Table structure for `test_paper`
 -- ----------------------------
-DROP TABLE IF EXISTS `test_paper`;
 CREATE TABLE `test_paper` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL COMMENT '试卷描述',
   `quessions` varchar(1000) NOT NULL COMMENT '试题集合，支持分数定制，json结构[{id:1,score:2},{id:2,score:2}]',
   `score` int(16) NOT NULL COMMENT '分数',
+  `deleted` bit(8) DEFAULT b'0' COMMENT '是否已删除，0：否，1：是',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 -- ----------------------------
 -- Records of test_paper
@@ -94,7 +95,7 @@ CREATE TABLE `test_result` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `acount` varchar(32) NOT NULL COMMENT '账号',
+  `account` varchar(32) NOT NULL COMMENT '账号',
   `password` varchar(16) NOT NULL COMMENT '密码',
   `name` varchar(255) NOT NULL COMMENT '姓名',
   `sex` int(8) NOT NULL COMMENT '性别（1：男，2：女）',
@@ -103,7 +104,7 @@ CREATE TABLE `user` (
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `账号` (`acount`)
+  UNIQUE KEY `账号` (`account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

@@ -32,11 +32,13 @@
         )
     </insert>
 
-    <delete id="delete">
-        DELETE FROM `test_paper`
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE `test_paper`
+        SET
+        deleted = #{deleted}
         WHERE
-            id = #{id} 
-    </delete>
+        id = #{id}
+    </update>
     
     <update id="update" parameterType="cn.orditech.entity.TestPaper">
         UPDATE `test_paper` 
@@ -73,7 +75,7 @@
     <select id="selectList" resultType="cn.orditech.entity.TestPaper">
         SELECT <include refid="columnMap"></include>
         FROM `test_paper`
-        WHERE 1=1
+        WHERE deleted = false
             <if test="id!=null" > AND id = #{id}</if>
             <if test="title!=null" > AND title = #{title}</if>
             <if test="quessions!=null" > AND quessions = #{quessions}</if>
