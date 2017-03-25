@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据库基本操作 -->
+<mapper namespace="cn.orditech.dao.impl.TestResultDaoImpl">
+    <sql id="columnMap">
+            id as id,
+            user_id as userId,
+            test_id as testId,
+            answer as answer,
+            score as score,
+            gmt_create as gmtCreate,
+            gmt_modified as gmtModified
+    </sql>
+
+    <insert id="insert" parameterType="cn.orditech.entity.TestResult">
+        INSERT INTO `test_result` (
+            id ,
+            user_id ,
+            test_id ,
+            answer ,
+            score ,
+            gmt_create ,
+            gmt_modified 
+        ) VALUES (
+            #{id} ,
+            #{userId} ,
+            #{testId} ,
+            #{answer} ,
+            #{score} ,
+            #{gmtCreate} ,
+            #{gmtModified} 
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM `test_result`
+        WHERE
+            id = #{id} 
+    </delete>
+    
+    <update id="update" parameterType="cn.orditech.entity.TestResult">
+        UPDATE `test_result` 
+        SET
+            user_id = #{userId} ,
+            test_id = #{testId} ,
+            answer = #{answer} ,
+            score = #{score} ,
+            gmt_create = #{gmtCreate} ,
+            gmt_modified = #{gmtModified} 
+        WHERE
+            id = #{id} 
+    </update>
+    
+    <update id="updateSelective" parameterType="cn.orditech.entity.TestResult">
+        UPDATE `test_result`
+        SET
+            id = #{id} 
+            <if test="userId!=null" >,user_id = #{userId}</if>
+            <if test="testId!=null" >,test_id = #{testId}</if>
+            <if test="answer!=null" >,answer = #{answer}</if>
+            <if test="score!=null" >,score = #{score}</if>
+            <if test="gmtCreate!=null" >,gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" >,gmt_modified = #{gmtModified}</if>
+        WHERE 
+            id = #{id} 
+    </update>
+    
+    <select id="selectOne" resultType="cn.orditech.entity.TestResult">
+        SELECT <include refid="columnMap"></include>
+        FROM `test_result`
+        WHERE 
+            id = #{id} 
+    </select>
+    
+    <select id="selectList" resultType="cn.orditech.entity.TestResult">
+        SELECT <include refid="columnMap"></include>
+        FROM `test_result`
+        WHERE 1=1
+            <if test="id!=null" > AND id = #{id}</if>
+            <if test="userId!=null" > AND user_id = #{userId}</if>
+            <if test="testId!=null" > AND test_id = #{testId}</if>
+            <if test="answer!=null" > AND answer = #{answer}</if>
+            <if test="score!=null" > AND score = #{score}</if>
+            <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
+    </select>
+</mapper>
+

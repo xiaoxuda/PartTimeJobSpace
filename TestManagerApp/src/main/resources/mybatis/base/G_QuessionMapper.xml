@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据库基本操作 -->
+<mapper namespace="cn.orditech.dao.impl.QuessionDaoImpl">
+    <sql id="columnMap">
+            id as id,
+            type as type,
+            title as title,
+            options as options,
+            answer as answer,
+            gmt_create as gmtCreate,
+            gmt_modified as gmtModified
+    </sql>
+
+    <insert id="insert" parameterType="cn.orditech.entity.Quession">
+        INSERT INTO `quession` (
+            id ,
+            type ,
+            title ,
+            options ,
+            answer ,
+            gmt_create ,
+            gmt_modified 
+        ) VALUES (
+            #{id} ,
+            #{type} ,
+            #{title} ,
+            #{options} ,
+            #{answer} ,
+            #{gmtCreate} ,
+            #{gmtModified} 
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM `quession`
+        WHERE
+            id = #{id} 
+    </delete>
+    
+    <update id="update" parameterType="cn.orditech.entity.Quession">
+        UPDATE `quession` 
+        SET
+            type = #{type} ,
+            title = #{title} ,
+            options = #{options} ,
+            answer = #{answer} ,
+            gmt_create = #{gmtCreate} ,
+            gmt_modified = #{gmtModified} 
+        WHERE
+            id = #{id} 
+    </update>
+    
+    <update id="updateSelective" parameterType="cn.orditech.entity.Quession">
+        UPDATE `quession`
+        SET
+            id = #{id} 
+            <if test="type!=null" >,type = #{type}</if>
+            <if test="title!=null" >,title = #{title}</if>
+            <if test="options!=null" >,options = #{options}</if>
+            <if test="answer!=null" >,answer = #{answer}</if>
+            <if test="gmtCreate!=null" >,gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" >,gmt_modified = #{gmtModified}</if>
+        WHERE 
+            id = #{id} 
+    </update>
+    
+    <select id="selectOne" resultType="cn.orditech.entity.Quession">
+        SELECT <include refid="columnMap"></include>
+        FROM `quession`
+        WHERE 
+            id = #{id} 
+    </select>
+    
+    <select id="selectList" resultType="cn.orditech.entity.Quession">
+        SELECT <include refid="columnMap"></include>
+        FROM `quession`
+        WHERE 1=1
+            <if test="id!=null" > AND id = #{id}</if>
+            <if test="type!=null" > AND type = #{type}</if>
+            <if test="title!=null" > AND title = #{title}</if>
+            <if test="options!=null" > AND options = #{options}</if>
+            <if test="answer!=null" > AND answer = #{answer}</if>
+            <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
+    </select>
+</mapper>
+

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据库基本操作 -->
+<mapper namespace="cn.orditech.dao.impl.TestPaperDaoImpl">
+    <sql id="columnMap">
+            id as id,
+            title as title,
+            quessions as quessions,
+            score as score,
+            gmt_create as gmtCreate,
+            gmt_modified as gmtModified
+    </sql>
+
+    <insert id="insert" parameterType="cn.orditech.entity.TestPaper">
+        INSERT INTO `test_paper` (
+            id ,
+            title ,
+            quessions ,
+            score ,
+            gmt_create ,
+            gmt_modified 
+        ) VALUES (
+            #{id} ,
+            #{title} ,
+            #{quessions} ,
+            #{score} ,
+            #{gmtCreate} ,
+            #{gmtModified} 
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM `test_paper`
+        WHERE
+            id = #{id} 
+    </delete>
+    
+    <update id="update" parameterType="cn.orditech.entity.TestPaper">
+        UPDATE `test_paper` 
+        SET
+            title = #{title} ,
+            quessions = #{quessions} ,
+            score = #{score} ,
+            gmt_create = #{gmtCreate} ,
+            gmt_modified = #{gmtModified} 
+        WHERE
+            id = #{id} 
+    </update>
+    
+    <update id="updateSelective" parameterType="cn.orditech.entity.TestPaper">
+        UPDATE `test_paper`
+        SET
+            id = #{id} 
+            <if test="title!=null" >,title = #{title}</if>
+            <if test="quessions!=null" >,quessions = #{quessions}</if>
+            <if test="score!=null" >,score = #{score}</if>
+            <if test="gmtCreate!=null" >,gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" >,gmt_modified = #{gmtModified}</if>
+        WHERE 
+            id = #{id} 
+    </update>
+    
+    <select id="selectOne" resultType="cn.orditech.entity.TestPaper">
+        SELECT <include refid="columnMap"></include>
+        FROM `test_paper`
+        WHERE 
+            id = #{id} 
+    </select>
+    
+    <select id="selectList" resultType="cn.orditech.entity.TestPaper">
+        SELECT <include refid="columnMap"></include>
+        FROM `test_paper`
+        WHERE 1=1
+            <if test="id!=null" > AND id = #{id}</if>
+            <if test="title!=null" > AND title = #{title}</if>
+            <if test="quessions!=null" > AND quessions = #{quessions}</if>
+            <if test="score!=null" > AND score = #{score}</if>
+            <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
+    </select>
+</mapper>
+
