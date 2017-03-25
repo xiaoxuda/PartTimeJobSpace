@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by Administrator on 2017/3/25.
  */
@@ -22,7 +25,7 @@ public class UserController {
     @ResponseBody
     public String register(@RequestParam(value = "account",required = false)String account,
                            @RequestParam(value = "password",required = false)String password,
-                           HttpResponse response){
+                           HttpServletResponse response){
 
         return "";
     }

@@ -5,29 +5,29 @@ import java.util.Date;
 /**
  * @author kimi
  */
-public class Quession implements Serializable {
+public class Question implements Serializable {
     private static final long serialVersionUID = 5454155825314635342L;
     
     /** 
      * id 
      **/
-    private java.lang.Long id;
+    private Long id;
     /** 
      * 题型，(1:选择，2:判断) 
      **/
-    private java.lang.Boolean type;
+    private Integer type;
     /** 
      * 问题描述 
      **/
-    private java.lang.String title;
+    private String title;
     /** 
      * 答案集合，json结构，[{code:1,desc:'aaaa'},{code:2,desc:'aaaa'}] 
      **/
-    private java.lang.String options;
+    private String options;
     /** 
      * 正确答案,对应options中的code 
      **/
-    private java.lang.String answer;
+    private String answer;
     /** 
      * gmtCreate 
      **/
@@ -37,38 +37,39 @@ public class Quession implements Serializable {
      **/
     private Date gmtModified;
 
-    public void setId(java.lang.Long value) {
+    public void setId(Long value) {
         this.id = value;
     }
-    public java.lang.Long getId() {
+    public Long getId() {
         return this.id;
     }
-    
-    public void setType(java.lang.Boolean value) {
-        this.type = value;
+
+    public Integer getType () {
+        return type;
     }
-    public java.lang.Boolean getType() {
-        return this.type;
+
+    public void setType (Integer type) {
+        this.type = type;
     }
-    
-    public void setTitle(java.lang.String value) {
+
+    public void setTitle(String value) {
         this.title = value;
     }
-    public java.lang.String getTitle() {
+    public String getTitle() {
         return this.title;
     }
     
-    public void setOptions(java.lang.String value) {
+    public void setOptions(String value) {
         this.options = value;
     }
-    public java.lang.String getOptions() {
+    public String getOptions() {
         return this.options;
     }
     
-    public void setAnswer(java.lang.String value) {
+    public void setAnswer(String value) {
         this.answer = value;
     }
-    public java.lang.String getAnswer() {
+    public String getAnswer() {
         return this.answer;
     }
     

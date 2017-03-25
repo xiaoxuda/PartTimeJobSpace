@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 自定义数据库操作	-->
-<mapper namespace="cn.orditech.dao.impl.QuessionDaoImpl">
+<mapper namespace="cn.orditech.dao.impl.QuestionDaoImpl">
 
 </mapper>
 
