@@ -6,8 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="cn.orditech.entity.Question" %>
+<%@ page import="com.alibaba.fastjson.JSON" %>
+<%
+    boolean isEdit = request.getAttribute ("isEdit")==null?false:true;
+    Question question = (Question)request.getAttribute ("question");
+%>
 <%@ include file="header.jsp"%>
 <form id="selectType">
+    <input id="questionId" value="" style="display:none;"/>
     <div class="form-group" >
         <label for="questionType" class="control-label">试题类型</label>
         <select id="questionType" name="type" class="form-control">
@@ -67,13 +74,50 @@
     <button id="save" class="btn btn-default">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
 </div>
 <script type="text/javascript">
+$(function(){
+    var isEdit = <%=isEdit %>;
+    var question = {};
+    <%if(isEdit){%>question=<%=JSON.toJSONString(question)%>;<%}%>
+
     $("#questionType option").click(function(e){
         $(".question-type").hide();
         $("#questiontype_"+$(this).attr("value")).show();
         $("#questionType").attr("value",$(this).attr("value"));
     });
 
+
+    if(isEdit){
+        $("#questionId").val(question.id);
+        $("#questionType").val(question.type);
+        $("#questionType option[value='"+question.type+"']").click();
+        $("#questionType").attr("disabled",true);
+        $("#questionTitle").val(question.title);
+        var options = JSON.parse(question.options);
+        $("#questiontype_"+question.type+" .option").each(function(){
+            var mark = $(this).data("mark");
+            for(var i=0;i<options.length;i++){
+                var option = options[i];
+                if(mark == option.mark){
+                    $(this).val(option.value);
+                    break;
+                }
+            }
+        });
+        var answer = question.answer.split(",");
+        $("#questiontype_"+question.type+" .answer").each(function(){
+            var value = $(this).val();
+            for(var i=0;i<answer.length;i++){
+                if(value == answer[i]){
+                    $(this).attr("checked",true);
+                    break;
+                }
+            }
+        });
+    }
+
     function parseParam(){
+        var id = $("#questionId").val();
+
         var title = $("#questionTitle").val();
         if(title==""){
             alert("请完善试题描述");
@@ -87,7 +131,8 @@
         }
 
         var options = new Array();
-        $("#questiontype_"+$("#questionType").attr("value")+" .option").each(function(){
+        var $options = $("#questiontype_"+$("#questionType").attr("value")+" .option");
+        $options.each(function(){
             var option = {};
             option.mark=$(this).data("mark");
             option.value=$(this).val();
@@ -96,7 +141,7 @@
             }
             options.push(option);
         });
-        if(options.length==0){
+        if(options.length!=$options.length){
             alert("请完善试题答案");
             return;
         }
@@ -113,6 +158,7 @@
         answer = answer.join(",");
 
         return {
+            id:id,
             type:type,
             title:title,
             options:options,
@@ -126,14 +172,16 @@
         if(!param){
             return;
         }
-        $.get("questionSave.htm",param,function(sucess,result){
-            if(result.success){
+        $.post("questionSave.htm",param,function(result,sucess){
+            var json = JSON.parse(result);
+            if(json.success){
                 alert("保存成功");
                 window.location.href = "questionAdd.htm";
             }else{
-                alert("保存失败",result.message);
+                alert("保存失败,",json.message);
             }
         });
     });
+});
 </script>
 <%@ include file="tail.jsp"%>

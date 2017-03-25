@@ -3,6 +3,8 @@ package cn.orditech.controller;
 import cn.orditech.entity.Question;
 import cn.orditech.result.JsonResult;
 import cn.orditech.service.QuestionService;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,16 +37,18 @@ public class QuestionEditController {
 
     @RequestMapping("/questionSave")
     @ResponseBody
-    public JsonResult questionSave(Question question){
+    public String questionSave(Question question){
+        JsonResult result;
         try {
             if (question.getId () == null) {
                 questionService.insert (question);
             } else {
                 questionService.updateSelective (question);
             }
+            result = JsonResult.successResult (null);
         }catch (Exception e){
-            return JsonResult.failResult (e.getMessage ());
+            result = JsonResult.failResult (e.getMessage ());
         }
-        return JsonResult.successResult (null);
+        return JSONObject.toJSONString(result);
     }
 }

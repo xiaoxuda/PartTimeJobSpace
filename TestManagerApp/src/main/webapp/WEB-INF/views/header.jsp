@@ -25,9 +25,9 @@
     <style>
         .content{
             width:800px;
-            padding-left:auto;
-            padding-right:auto;
-            padding-top:100px;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:100px;
         }
     </style>
 </head>

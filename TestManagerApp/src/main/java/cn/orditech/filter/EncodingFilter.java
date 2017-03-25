@@ -25,12 +25,7 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void init (FilterConfig cfg) throws ServletException {
-        Enumeration<String> names = cfg.getInitParameterNames ();
-        while (names.hasMoreElements ()) {
-            String name = names.nextElement ();
-            params.put (name, cfg.getInitParameter (name));
-            System.out.println (name);
-        }
+
     }
 
 }
