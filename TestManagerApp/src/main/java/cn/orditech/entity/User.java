@@ -15,7 +15,7 @@ public class User implements Serializable {
     /** 
      * 账号 
      **/
-    private java.lang.String acount;
+    private java.lang.String account;
     /** 
      * 密码 
      **/
@@ -52,11 +52,11 @@ public class User implements Serializable {
         return this.id;
     }
     
-    public void setAcount(java.lang.String value) {
-        this.acount = value;
+    public void setAccount(java.lang.String value) {
+        this.account = value;
     }
-    public java.lang.String getAcount() {
-        return this.acount;
+    public java.lang.String getAccount() {
+        return this.account;
     }
     
     public void setPassword(java.lang.String value) {

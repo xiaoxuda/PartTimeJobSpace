@@ -7,7 +7,7 @@
 <mapper namespace="cn.orditech.dao.impl.UserDaoImpl">
     <sql id="columnMap">
             id as id,
-            acount as acount,
+            account as account,
             password as password,
             name as name,
             sex as sex,
@@ -20,7 +20,7 @@
     <insert id="insert" parameterType="cn.orditech.entity.User">
         INSERT INTO `user` (
             id ,
-            acount ,
+            account ,
             password ,
             name ,
             sex ,
@@ -30,7 +30,7 @@
             gmt_modified 
         ) VALUES (
             #{id} ,
-            #{acount} ,
+            #{account} ,
             #{password} ,
             #{name} ,
             #{sex} ,
@@ -50,7 +50,7 @@
     <update id="update" parameterType="cn.orditech.entity.User">
         UPDATE `user` 
         SET
-            acount = #{acount} ,
+            account = #{account} ,
             password = #{password} ,
             name = #{name} ,
             sex = #{sex} ,
@@ -66,7 +66,7 @@
         UPDATE `user`
         SET
             id = #{id} 
-            <if test="acount!=null" >,acount = #{acount}</if>
+            <if test="account!=null" >,account = #{account}</if>
             <if test="password!=null" >,password = #{password}</if>
             <if test="name!=null" >,name = #{name}</if>
             <if test="sex!=null" >,sex = #{sex}</if>
@@ -90,7 +90,7 @@
         FROM `user`
         WHERE 1=1
             <if test="id!=null" > AND id = #{id}</if>
-            <if test="acount!=null" > AND acount = #{acount}</if>
+            <if test="account!=null" > AND account = #{account}</if>
             <if test="password!=null" > AND password = #{password}</if>
             <if test="name!=null" > AND name = #{name}</if>
             <if test="sex!=null" > AND sex = #{sex}</if>
