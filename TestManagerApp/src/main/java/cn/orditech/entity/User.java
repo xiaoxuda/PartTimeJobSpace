@@ -35,7 +35,7 @@ public class User implements Serializable {
     /** 
      * 用户类型（1：普通用户，2：管理员） 
      **/
-    private java.lang.Boolean type;
+    private java.lang.Integer type;
     /** 
      * 创建时间 
      **/
@@ -86,14 +86,15 @@ public class User implements Serializable {
     public java.lang.String getDepartment() {
         return this.department;
     }
-    
-    public void setType(java.lang.Boolean value) {
-        this.type = value;
+
+    public Integer getType () {
+        return type;
     }
-    public java.lang.Boolean getType() {
-        return this.type;
+
+    public void setType (Integer type) {
+        this.type = type;
     }
-    
+
     public void setGmtCreate(Date value) {
         this.gmtCreate = value;
     }

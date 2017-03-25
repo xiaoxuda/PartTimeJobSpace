@@ -2,7 +2,6 @@ package cn.orditech.controller;
 
 import cn.orditech.entity.User;
 import cn.orditech.service.UserService;
-import com.sun.deploy.net.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Administrator on 2017/3/25.
@@ -27,8 +24,7 @@ public class UserController {
     @ResponseBody
     public String register(@RequestParam(value = "account",required = false)String account,
                            @RequestParam(value = "password",required = false)String password,
-                           @RequestParam(value = "name",required = false)String name,
-                           HttpServletResponse response){
+                           @RequestParam(value = "name",required = false)String name){
         try{
         User user = new User();
         user.setAcount(account);

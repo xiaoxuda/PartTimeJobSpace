@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2017-03-12 21:47:38
+Date: 2017-03-25 10:53:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,35 +20,35 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `department`;
 CREATE TABLE `department` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `code` varchar(32) CHARACTER SET utf8 NOT NULL COMMENT '部门编号',
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '部门名称',
+  `code` varchar(32) NOT NULL COMMENT '部门编号',
+  `name` varchar(255) NOT NULL COMMENT '部门名称',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `部门编号` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of department
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `quession`
+-- Table structure for `question`
 -- ----------------------------
-DROP TABLE IF EXISTS `quession`;
-CREATE TABLE `quession` (
+DROP TABLE IF EXISTS `question`;
+CREATE TABLE `question` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `type` bit(8) NOT NULL COMMENT '题型，(1:选择，2:判断)',
-  `title` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '问题描述',
-  `options` varchar(1000) CHARACTER SET utf8 DEFAULT NULL COMMENT '答案集合，json结构，[{code:1,desc:''aaaa''},{code:2,desc:''aaaa''}]',
-  `answer` char(8) CHARACTER SET utf8 NOT NULL COMMENT '正确答案,对应options中的code',
+  `type` int(8) NOT NULL COMMENT '题型，(1:选择，2:判断)',
+  `title` varchar(255) NOT NULL COMMENT '问题描述',
+  `options` varchar(1000) DEFAULT NULL COMMENT '答案集合，json结构，[{code:1,desc:''aaaa''},{code:2,desc:''aaaa''}]',
+  `answer` char(8) NOT NULL COMMENT '正确答案,对应options中的code',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of quession
+-- Records of question
 -- ----------------------------
 
 -- ----------------------------
@@ -57,13 +57,13 @@ CREATE TABLE `quession` (
 DROP TABLE IF EXISTS `test_paper`;
 CREATE TABLE `test_paper` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '试卷描述',
-  `quessions` varchar(1000) CHARACTER SET utf8 NOT NULL COMMENT '试题集合，支持分数定制，json结构[{id:1,score:2},{id:2,score:2}]',
+  `title` varchar(255) NOT NULL COMMENT '试卷描述',
+  `quessions` varchar(1000) NOT NULL COMMENT '试题集合，支持分数定制，json结构[{id:1,score:2},{id:2,score:2}]',
   `score` int(16) NOT NULL COMMENT '分数',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of test_paper
@@ -77,12 +77,12 @@ CREATE TABLE `test_result` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
   `test_id` bigint(20) NOT NULL COMMENT '试卷ID',
-  `answer` varchar(1000) CHARACTER SET utf8 NOT NULL COMMENT '答案，json结构，[{id:1,answer:''''}]',
+  `answer` varchar(1000) NOT NULL COMMENT '答案，json结构，[{id:1,answer:''''}]',
   `score` int(16) NOT NULL COMMENT '得分',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of test_result
@@ -94,17 +94,17 @@ CREATE TABLE `test_result` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `acount` varchar(32) CHARACTER SET utf8 NOT NULL COMMENT '账号',
-  `password` varchar(16) CHARACTER SET utf8 NOT NULL COMMENT '密码',
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '姓名',
-  `sex` bit(8) NOT NULL COMMENT '性别（1：男，2：女）',
-  `department` varchar(32) CHARACTER SET utf8 NOT NULL COMMENT '所属部门编号',
-  `type` bit(8) NOT NULL COMMENT '用户类型（1：普通用户，2：管理员）',
+  `acount` varchar(32) NOT NULL COMMENT '账号',
+  `password` varchar(16) NOT NULL COMMENT '密码',
+  `name` varchar(255) NOT NULL COMMENT '姓名',
+  `sex` int(8) NOT NULL COMMENT '性别（1：男，2：女）',
+  `department` varchar(32) NOT NULL COMMENT '所属部门编号',
+  `type` int(8) NOT NULL COMMENT '用户类型（1：普通用户，2：管理员）',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `账号` (`acount`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user

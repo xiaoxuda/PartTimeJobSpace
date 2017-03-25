@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 数据库基本操作 -->
-<mapper namespace="cn.orditech.dao.impl.QuessionDaoImpl">
+<mapper namespace="cn.orditech.dao.impl.QuestionDaoImpl">
     <sql id="columnMap">
             id as id,
             type as type,
@@ -15,8 +15,8 @@
             gmt_modified as gmtModified
     </sql>
 
-    <insert id="insert" parameterType="cn.orditech.entity.Quession">
-        INSERT INTO `quession` (
+    <insert id="insert" parameterType="cn.orditech.entity.Question">
+        INSERT INTO `question` (
             id ,
             type ,
             title ,
@@ -36,13 +36,13 @@
     </insert>
 
     <delete id="delete">
-        DELETE FROM `quession`
+        DELETE FROM `question`
         WHERE
             id = #{id} 
     </delete>
     
-    <update id="update" parameterType="cn.orditech.entity.Quession">
-        UPDATE `quession` 
+    <update id="update" parameterType="cn.orditech.entity.Question">
+        UPDATE `question` 
         SET
             type = #{type} ,
             title = #{title} ,
@@ -54,8 +54,8 @@
             id = #{id} 
     </update>
     
-    <update id="updateSelective" parameterType="cn.orditech.entity.Quession">
-        UPDATE `quession`
+    <update id="updateSelective" parameterType="cn.orditech.entity.Question">
+        UPDATE `question`
         SET
             id = #{id} 
             <if test="type!=null" >,type = #{type}</if>
@@ -68,16 +68,16 @@
             id = #{id} 
     </update>
     
-    <select id="selectOne" resultType="cn.orditech.entity.Quession">
+    <select id="selectOne" resultType="cn.orditech.entity.Question">
         SELECT <include refid="columnMap"></include>
-        FROM `quession`
+        FROM `question`
         WHERE 
             id = #{id} 
     </select>
     
-    <select id="selectList" resultType="cn.orditech.entity.Quession">
+    <select id="selectList" resultType="cn.orditech.entity.Question">
         SELECT <include refid="columnMap"></include>
-        FROM `quession`
+        FROM `question`
         WHERE 1=1
             <if test="id!=null" > AND id = #{id}</if>
             <if test="type!=null" > AND type = #{type}</if>
