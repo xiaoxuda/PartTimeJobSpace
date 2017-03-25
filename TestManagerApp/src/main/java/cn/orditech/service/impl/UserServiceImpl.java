@@ -21,5 +21,10 @@ public class UserServiceImpl extends BaseService<User> implements UserService{
     protected BaseDao<User> getDao(){
         return this.userDao;
     }
+
+    @Override
+    public int insert(User entity){
+        return userDao.insert(entity);
+    }
     
 }

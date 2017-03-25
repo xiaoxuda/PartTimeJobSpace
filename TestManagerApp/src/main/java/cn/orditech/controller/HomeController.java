@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 @RequestMapping("/")
 public class HomeController {
-    @Autowired
+
     @RequestMapping("index")
     public String index(HttpServletRequest request,HttpServletResponse respone){
         return "index";
