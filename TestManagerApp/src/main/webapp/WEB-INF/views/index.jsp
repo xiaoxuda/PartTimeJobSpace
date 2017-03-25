@@ -12,12 +12,7 @@
     </script>
 </head>
 <body>
-<a href="welcome.htm">welcome</a>
-
-<div id="receive"></div>
-<script type="text/javascript">
-    $("#receive").text(document.cookie);
-</script>
+    <a href="www.fundertech.cn">welcome</a>
 
 </body>
 </html>
