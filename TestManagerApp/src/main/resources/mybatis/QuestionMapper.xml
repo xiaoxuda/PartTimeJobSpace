@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据库基本操作 -->
+<mapper namespace="cn.orditech.dao.impl.QuestionDaoImpl">
+    <sql id="columnMap">
+            id as id,
+            type as type,
+            title as title,
+            options as options,
+            answer as answer,
+            score as score,
+            deleted as deleted,
+            gmt_create as gmtCreate,
+            gmt_modified as gmtModified
+    </sql>
+
+    <insert id="insert" parameterType="cn.orditech.entity.Question">
+        INSERT INTO `question` (
+            id ,
+            type ,
+            title ,
+            options ,
+            answer ,
+            score ,
+            gmt_create ,
+            gmt_modified 
+        ) VALUES (
+            #{id} ,
+            #{type} ,
+            #{title} ,
+            #{options} ,
+            #{answer} ,
+            #{score} ,
+            #{gmtCreate} ,
+            #{gmtModified} 
+        )
+    </insert>
+
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE `question`
+        SET
+        deleted = #{deleted}
+        WHERE
+        id = #{id}
+    </update>
+    
+    <update id="update" parameterType="cn.orditech.entity.Question">
+        UPDATE `question` 
+        SET
+            type = #{type} ,
+            title = #{title} ,
+            options = #{options} ,
+            answer = #{answer} ,
+            score = #{score} ,
+            gmt_create = #{gmtCreate} ,
+            gmt_modified = #{gmtModified} 
+        WHERE
+            id = #{id} 
+    </update>
+    
+    <update id="updateSelective" parameterType="cn.orditech.entity.Question">
+        UPDATE `question`
+        SET
+            id = #{id} 
+            <if test="type!=null" >,type = #{type}</if>
+            <if test="title!=null" >,title = #{title}</if>
+            <if test="options!=null" >,options = #{options}</if>
+            <if test="answer!=null" >,answer = #{answer}</if>
+            <if test="score!=null" >,score = #{score}</if>
+            <if test="gmtCreate!=null" >,gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" >,gmt_modified = #{gmtModified}</if>
+        WHERE 
+            id = #{id} 
+    </update>
+    
+    <select id="selectOne" resultType="cn.orditech.entity.Question">
+        SELECT <include refid="columnMap"></include>
+        FROM `question`
+        WHERE 
+            id = #{id} 
+    </select>
+    
+    <select id="selectList" resultType="cn.orditech.entity.Question">
+        SELECT <include refid="columnMap"></include>
+        FROM `question`
+        WHERE deleted = false
+            <if test="id!=null" > AND id = #{id}</if>
+            <if test="type!=null" > AND type = #{type}</if>
+            <if test="title!=null" > AND title = #{title}</if>
+            <if test="options!=null" > AND options = #{options}</if>
+            <if test="answer!=null" > AND answer = #{answer}</if>
+            <if test="score!=null" > AND score = #{score}</if>
+            <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
+    </select>
+
+    <select id="selectByIds" resultType="cn.orditech.entity.Question" parameterType="java.util.Map">
+        SELECT <include refid="columnMap"></include>
+        FROM `question`
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+
+    <select id="pageQuery" resultType="cn.orditech.entity.Question">
+        SELECT <include refid="columnMap"></include>
+        FROM `question`
+        WHERE deleted = false
+        <if test="type!=null" > AND type = #{type}</if>
+        LIMIT #{offset},#{pageSize}
+    </select>
+</mapper>
+

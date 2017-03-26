@@ -38,11 +38,11 @@
      
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>*.htm</url-pattern>
     </filter-mapping>
     <filter-mapping>  
         <filter-name>characterEncodingFilter</filter-name>  
-        <url-pattern>/*</url-pattern>  
+        <url-pattern>*.htm</url-pattern>  
     </filter-mapping> 
 
     <!-- Log4jConfigListener已经包含了WebAppRootListener,WebAppRootListener

@@ -29,6 +29,14 @@ public class Question implements Serializable {
      **/
     private String answer;
     /** 
+     * 默认分数 
+     **/
+    private Integer score;
+    /** 
+     * 是否已删除，0：否，1：是 
+     **/
+    private Boolean deleted;
+    /** 
      * gmtCreate 
      **/
     private Date gmtCreate;
@@ -43,15 +51,14 @@ public class Question implements Serializable {
     public Long getId() {
         return this.id;
     }
-
-    public Integer getType () {
-        return type;
+    
+    public void setType(Integer value) {
+        this.type = value;
     }
-
-    public void setType (Integer type) {
-        this.type = type;
+    public Integer getType() {
+        return this.type;
     }
-
+    
     public void setTitle(String value) {
         this.title = value;
     }
@@ -71,6 +78,20 @@ public class Question implements Serializable {
     }
     public String getAnswer() {
         return this.answer;
+    }
+    
+    public void setScore(Integer value) {
+        this.score = value;
+    }
+    public Integer getScore() {
+        return this.score;
+    }
+    
+    public void setDeleted(Boolean value) {
+        this.deleted = value;
+    }
+    public Boolean getDeleted() {
+        return this.deleted;
     }
     
     public void setGmtCreate(Date value) {

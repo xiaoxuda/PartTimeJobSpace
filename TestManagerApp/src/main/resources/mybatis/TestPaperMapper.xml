@@ -4,88 +4,85 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 数据库基本操作 -->
-<mapper namespace="cn.orditech.dao.impl.QuestionDaoImpl">
+<mapper namespace="cn.orditech.dao.impl.TestPaperDaoImpl">
     <sql id="columnMap">
             id as id,
-            type as type,
             title as title,
-            options as options,
-            answer as answer,
+            questions as questions,
+            score as score,
             gmt_create as gmtCreate,
             gmt_modified as gmtModified
     </sql>
 
-    <insert id="insert" parameterType="cn.orditech.entity.Question">
-        INSERT INTO `question` (
+    <insert id="insert" parameterType="cn.orditech.entity.TestPaper">
+        INSERT INTO `test_paper` (
             id ,
-            type ,
             title ,
-            options ,
-            answer ,
+            questions ,
+            score ,
             gmt_create ,
             gmt_modified 
         ) VALUES (
             #{id} ,
-            #{type} ,
             #{title} ,
-            #{options} ,
-            #{answer} ,
+            #{questions} ,
+            #{score} ,
             #{gmtCreate} ,
             #{gmtModified} 
         )
     </insert>
 
-    <delete id="delete">
-        DELETE FROM `question`
-        WHERE
-            id = #{id} 
-    </delete>
-    
-    <update id="update" parameterType="cn.orditech.entity.Question">
-        UPDATE `question` 
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE `test_paper`
         SET
-            type = #{type} ,
+        deleted = #{deleted}
+        WHERE
+        id = #{id}
+    </update>
+    
+    <update id="update" parameterType="cn.orditech.entity.TestPaper">
+        UPDATE `test_paper` 
+        SET
             title = #{title} ,
-            options = #{options} ,
-            answer = #{answer} ,
+            questions = #{questions} ,
+            score = #{score} ,
             gmt_create = #{gmtCreate} ,
             gmt_modified = #{gmtModified} 
         WHERE
             id = #{id} 
     </update>
     
-    <update id="updateSelective" parameterType="cn.orditech.entity.Question">
-        UPDATE `question`
+    <update id="updateSelective" parameterType="cn.orditech.entity.TestPaper">
+        UPDATE `test_paper`
         SET
             id = #{id} 
-            <if test="type!=null" >,type = #{type}</if>
             <if test="title!=null" >,title = #{title}</if>
-            <if test="options!=null" >,options = #{options}</if>
-            <if test="answer!=null" >,answer = #{answer}</if>
+            <if test="questions!=null" >,questions = #{questions}</if>
+            <if test="score!=null" >,score = #{score}</if>
             <if test="gmtCreate!=null" >,gmt_create = #{gmtCreate}</if>
             <if test="gmtModified!=null" >,gmt_modified = #{gmtModified}</if>
         WHERE 
             id = #{id} 
     </update>
     
-    <select id="selectOne" resultType="cn.orditech.entity.Question">
+    <select id="selectOne" resultType="cn.orditech.entity.TestPaper">
         SELECT <include refid="columnMap"></include>
-        FROM `question`
+        FROM `test_paper`
         WHERE 
             id = #{id} 
     </select>
     
-    <select id="selectList" resultType="cn.orditech.entity.Question">
+    <select id="selectList" resultType="cn.orditech.entity.TestPaper">
         SELECT <include refid="columnMap"></include>
-        FROM `question`
-        WHERE 1=1
+        FROM `test_paper`
+        WHERE deleted = false
             <if test="id!=null" > AND id = #{id}</if>
-            <if test="type!=null" > AND type = #{type}</if>
             <if test="title!=null" > AND title = #{title}</if>
-            <if test="options!=null" > AND options = #{options}</if>
-            <if test="answer!=null" > AND answer = #{answer}</if>
+            <if test="questions!=null" > AND questions = #{questions}</if>
+            <if test="score!=null" > AND score = #{score}</if>
             <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
             <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
     </select>
+
 </mapper>
 

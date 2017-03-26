@@ -99,5 +99,19 @@
             <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
             <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
     </select>
+
+    <select id="getUserByAccount" resultType="cn.orditech.entity.User">
+        SELECT <include refid="columnMap"/>
+        FROM `user`
+        WHERE
+        account = #{account}
+    </select>
+
+    <select id="getUserByAccountAndPassword" resultType="cn.orditech.entity.User">
+        SELECT <include refid="columnMap"/>
+        FROM `user`
+        WHERE
+        account = #{account} AND password = #{password}
+    </select>
 </mapper>
 

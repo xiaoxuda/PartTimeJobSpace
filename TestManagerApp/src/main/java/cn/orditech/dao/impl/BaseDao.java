@@ -18,7 +18,7 @@ public class BaseDao<T>{
      * 返回sqlSession
      * @return
      */
-    public SqlSessionTemplate getSqlSession(){
+    protected SqlSessionTemplate getSqlSession(){
         return this.sqlSession;
     }
     /**

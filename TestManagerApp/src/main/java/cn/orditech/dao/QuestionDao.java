@@ -2,6 +2,8 @@
 package cn.orditech.dao;
 
 import cn.orditech.entity.Question;
+import cn.orditech.query.QuestionPageQuery;
+
 import java.util.List;
 
 /**
@@ -46,4 +48,18 @@ public interface QuestionDao{
      * @return
      */
     List<Question> selectList (Question entity);
+
+    /**
+     * 批量查询试题信息
+     * @param ids
+     * @return
+     */
+    List<Question> selectByIds(List<Long> ids);
+
+    /**
+     * 分页查询试题
+     * @param questionPageQuery
+     * @return
+     */
+    List<Question> pageQuery(QuestionPageQuery questionPageQuery);
 }

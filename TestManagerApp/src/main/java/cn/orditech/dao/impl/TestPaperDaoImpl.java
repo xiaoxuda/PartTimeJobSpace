@@ -15,4 +15,9 @@ public class TestPaperDaoImpl extends BaseDao<TestPaper> implements TestPaperDao
     public TestPaperDaoImpl(){
         this.namespace="cn.orditech.dao.impl.TestPaperDaoImpl";
     }
+
+    @Override
+    public int delete(Long id){
+        return getSqlSession ().update ("delete",id);
+    }
 }
