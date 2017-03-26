@@ -1,8 +1,13 @@
 package cn.orditech.controller;
 
 import cn.orditech.entity.Question;
+import cn.orditech.entity.TestPaper;
+import cn.orditech.query.QuestionPageQuery;
 import cn.orditech.result.JsonResult;
 import cn.orditech.service.QuestionService;
+import cn.orditech.service.TestPaperService;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +24,11 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/question")
-public class QuestionEditController {
+public class QuestionController {
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private TestPaperService testPaperService;
 
     @RequestMapping("/questionAdd")
     public String questionAdd(){
@@ -60,5 +67,12 @@ public class QuestionEditController {
         model.addAttribute ("questionList",questionList);
 
         return "question_list";
+    }
+
+    @RequestMapping("/pageQuery")
+    @ResponseBody
+    public String pageQuery(QuestionPageQuery questionPageQuery){
+        List<Question> questionList = questionService.pageQuery (questionPageQuery);
+        return JSONArray.toJSONString (JsonResult.successResult (questionList));
     }
 }

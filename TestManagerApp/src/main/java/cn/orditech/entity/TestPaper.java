@@ -19,7 +19,7 @@ public class TestPaper implements Serializable {
     /** 
      * 试题集合，支持分数定制，json结构[{id:1,score:2},{id:2,score:2}] 
      **/
-    private String quessions;
+    private String questions;
     /** 
      * 分数 
      **/
@@ -50,14 +50,15 @@ public class TestPaper implements Serializable {
     public String getTitle() {
         return this.title;
     }
-    
-    public void setQuessions(String value) {
-        this.quessions = value;
+
+    public String getQuestions () {
+        return questions;
     }
-    public String getQuessions() {
-        return this.quessions;
+
+    public void setQuestions (String questions) {
+        this.questions = questions;
     }
-    
+
     public void setScore(Integer value) {
         this.score = value;
     }

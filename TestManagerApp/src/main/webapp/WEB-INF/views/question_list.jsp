@@ -1,18 +1,18 @@
-<%@ page import="cn.orditech.entity.Question" %>
-<%@ page import="java.util.List" %>
-<%@ page import="cn.orditech.enums.QuestionTypeEnum" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: kimi
   Date: 2017/3/25
   Time: 22:08
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="cn.orditech.entity.Question" %>
+<%@ page import="java.util.List" %>
+<%@ page import="cn.orditech.enums.QuestionTypeEnum" %>
 <%
     List<Question> questionList = (List<Question>)request.getAttribute ("questionList");
 %>
 <%@ include file="header.jsp"%>
-
 <table class="table table-bordered table-hover table-condensed">
     <thead>
         <td>ID</td>

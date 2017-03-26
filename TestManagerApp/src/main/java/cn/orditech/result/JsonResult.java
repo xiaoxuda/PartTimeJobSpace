@@ -20,9 +20,9 @@ public class JsonResult implements Serializable{
     /**
      * 响应数据
      */
-    private JSONObject data = new JSONObject ();
+    private Object data;
 
-    public static JsonResult successResult(JSONObject data){
+    public static JsonResult successResult(Object data){
         JsonResult result = new JsonResult();
         result.success = true;
         result.data = data;
@@ -34,10 +34,6 @@ public class JsonResult implements Serializable{
         result.success = false;
         result.message = message;
         return result;
-    }
-
-    public void addData(String key,Object value){
-        data.put (key,value);
     }
 
     public Boolean getSuccess () {
@@ -56,11 +52,11 @@ public class JsonResult implements Serializable{
         this.message = message;
     }
 
-    public JSONObject getData () {
+    public Object getData () {
         return data;
     }
 
-    public void setData (JSONObject data) {
+    public void setData (Object data) {
         this.data = data;
     }
 }

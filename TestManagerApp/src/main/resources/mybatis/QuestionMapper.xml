@@ -96,5 +96,20 @@
             <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
             <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
     </select>
+
+    <select id="selectByIds" resultType="cn.orditech.entity.Question" parameterType="java.util.Map">
+        SELECT <include refid="columnMap"></include>
+        FROM `question`
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+
+    <select id="pageQuery" resultType="cn.orditech.entity.Question">
+        SELECT <include refid="columnMap"></include>
+        FROM `question`
+        WHERE deleted = false
+        <if test="type!=null" > AND type = #{type}</if>
+        LIMIT #{offset},#{pageSize}
+    </select>
 </mapper>
 

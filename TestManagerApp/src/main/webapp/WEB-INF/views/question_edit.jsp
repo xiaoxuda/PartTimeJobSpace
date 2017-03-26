@@ -5,15 +5,15 @@
   Time: 10:05
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="cn.orditech.entity.Question" %>
 <%@ page import="com.alibaba.fastjson.JSON" %>
 <%
-    boolean isEdit = request.getAttribute ("isEdit")==null?false:true;
+    boolean isEdit = Boolean.TRUE.equals (request.getAttribute ("isEdit"));
     Question question = (Question)request.getAttribute ("question");
 %>
 <%@ include file="header.jsp"%>
-<form id="selectType">
+<form>
     <input id="questionId" value="" style="display:none;"/>
     <div class="form-group" >
         <label for="questionType" class="control-label">试题类型</label>
@@ -188,7 +188,7 @@ $(function(){
             var json = JSON.parse(result);
             if(json.success){
                 alert("保存成功");
-                window.location.href = "questionAdd.htm";
+                window.location.href = "questionList.htm";
             }else{
                 alert("保存失败,",json.message);
             }
