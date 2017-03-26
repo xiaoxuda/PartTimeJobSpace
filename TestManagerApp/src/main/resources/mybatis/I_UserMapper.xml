@@ -5,6 +5,18 @@
 
 <!-- 自定义数据库操作	-->
 <mapper namespace="cn.orditech.dao.impl.UserDaoImpl">
+    <select id="getUserByAccount" resultType="cn.orditech.entity.User">
+        SELECT <include refid="columnMap"/>
+        FROM `user`
+        WHERE
+        account = #{account}
+    </select>
 
+    <select id="getUserByAccountAndPassword" resultType="cn.orditech.entity.User">
+        SELECT <include refid="columnMap"/>
+        FROM `user`
+        WHERE
+        account = #{account} AND password = #{password}
+    </select>
 </mapper>
 

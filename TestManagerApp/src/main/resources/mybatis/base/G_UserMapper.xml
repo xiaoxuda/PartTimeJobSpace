@@ -17,7 +17,7 @@
             gmt_modified as gmtModified
     </sql>
 
-    <insert id="insert" parameterType="cn.orditech.entity.User">
+    <insert id="insert" parameterType="cn.orditech.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `user` (
             id ,
             account ,

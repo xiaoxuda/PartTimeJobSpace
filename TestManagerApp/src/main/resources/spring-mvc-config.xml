@@ -26,6 +26,13 @@
     <mvc:default-servlet-handler/>
     <!-- 包自动扫描机制，自动扫描给定位置内的注解 并提供解析器-->
     <context:component-scan base-package="cn.orditech"></context:component-scan>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/register.htm"/>
+            <mvc:mapping path="/login.htm"/>
+            <bean class="cn.orditech.interceptor.PassportInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <!-- 视图解析会按order从小到大尝试使用相应的解析器解析view，解析到就停止 -->
     <!-- combine different view technologies in a web application -->

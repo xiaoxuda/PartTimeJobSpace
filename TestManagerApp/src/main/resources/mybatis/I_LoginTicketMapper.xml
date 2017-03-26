@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 自定义数据库操作	-->
+<mapper namespace="cn.orditech.dao.impl.LoginTicketDaoImpl">
+    <sql id="table">login_ticket</sql>
+    <sql id="columnMap">
+    id as id,
+    user_id as userId,
+    expired as expired,
+    status as status,
+    ticket as ticket
+    </sql>
+    <insert id="insert" parameterType="cn.orditech.entity.LoginTicket">
+        INSERT INTO `login_ticket` (
+        id ,
+        user_id ,
+        expired ,
+        status ,
+        ticket
+        ) VALUES (
+        #{id} ,
+        #{userId} ,
+        #{expired} ,
+        #{status} ,
+        #{ticket}
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM `login_ticket`
+        WHERE
+        ticket = #{ticket}
+    </delete>
+    <select id="getLoginTicketByTicket" resultType="cn.orditech.entity.LoginTicket">
+        SELECT <include refid="columnMap"/>
+        FROM `login_ticket`
+        WHERE
+        ticket = #{ticket}
+    </select>
+    <update id="updateTicketStatus">
+        UPDATE
+        <include refid="table"/>
+        SET status = #{status}
+        WHERE ticket = #{ticket}
+    </update>
+
+</mapper>
+

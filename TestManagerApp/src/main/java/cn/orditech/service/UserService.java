@@ -3,6 +3,7 @@ package cn.orditech.service;
 
 import cn.orditech.entity.User;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数据操作接口
@@ -46,4 +47,41 @@ public interface UserService{
      * @return
      */
     List<User> selectList(User entity);
+
+    /**
+     * 通过账户名获取账户信息
+     * @param account
+     * @return
+     */
+    User getUserByAccount(String account);
+
+    /**
+     * 用户登录时，验证用户名、密码是否正确
+     * @param account
+     * @param password
+     * @return
+     */
+    User getUserByAccountAndPassword(String account,String password);
+
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
+    Map<String,Object> register(User user);
+
+    /**
+     * 用户登录
+     * @param account
+     * @param password
+     * @return
+     */
+    Map<String,Object> login(String account,String password);
+
+    /**
+     *退出登录
+     * @param ticket
+     * @param status
+     */
+    void logout(String ticket,int status);
 }
