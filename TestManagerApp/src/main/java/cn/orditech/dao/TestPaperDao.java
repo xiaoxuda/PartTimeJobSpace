@@ -46,4 +46,11 @@ public interface TestPaperDao{
      * @return
      */
     List<TestPaper> selectList(TestPaper entity);
+
+    /**
+     * 批量查询
+     * @param ids
+     * @return
+     */
+    List<TestPaper> findByIds(List<Long> ids);
 }

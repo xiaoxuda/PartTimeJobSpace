@@ -8,6 +8,8 @@ import cn.orditech.entity.TestPaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 
  * @author kimi
@@ -21,5 +23,9 @@ public class TestPaperServiceImpl extends BaseService<TestPaper> implements Test
     protected BaseDao<TestPaper> getDao(){
         return this.testPaperDao;
     }
-    
+
+    @Override
+    public List<TestPaper> findByIds (List<Long> ids) {
+        return testPaperDao.findByIds (ids);
+    }
 }

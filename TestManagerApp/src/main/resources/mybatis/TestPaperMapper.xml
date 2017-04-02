@@ -84,5 +84,13 @@
             <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
     </select>
 
+    <select id="findByIds" resultType="cn.orditech.entity.TestPaper" parameterType="java.util.ArrayList">
+        SELECT <include refid="columnMap"></include>
+        FROM `test_paper`
+        WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
 </mapper>
 

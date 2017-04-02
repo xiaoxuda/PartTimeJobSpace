@@ -1,6 +1,5 @@
 package cn.orditech.result;
 
-import com.alibaba.fastjson.JSONObject;
 
 import java.io.Serializable;
 
