@@ -23,14 +23,36 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <style>
-        .content{
-            width:800px;
-            margin-left:auto;
-            margin-right:auto;
-            margin-top:100px;
+        .top{
+            position: relative;
+            width: 100%;
+            height: 150px;
         }
+        .left_nav{
+            position: relative;
+            float:left;
+            width: 15%;
+        }
+        .content{
+            float:left;
+            width:80%;
+        }
+        .sub_content {
+            width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
     </style>
 </head>
 <body>
-    <div class="content">
+    <div class="top"></div>
+    <div class="left_nav">
+        <a href="/question/questionList.htm" data-level="0">试题库</a><br/>
+        <a href="/question/questionEdit.htm" data-level="0">编辑试题</a><br/>
+        <a href="/testPaper/testPaperList.htm" data-level="0">试卷库</a><br/>
+        <a href="/testPaper/testPaperAdd.htm" data-level="0">添加试卷</a><br/>
+        <a href="/test/testResultList.htm" data-level="0">考试成绩</a><br/>
+    </div>
+    <div class="content"><div class="sub_content">
 

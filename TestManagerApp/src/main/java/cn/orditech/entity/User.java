@@ -36,6 +36,11 @@ public class User implements Serializable {
      * 用户类型（1：普通用户，2：管理员） 
      **/
     private java.lang.Integer type;
+    /**
+     * 用户级别
+     * {@link cn.orditech.enums.AuthorizationTypeEnum}
+     */
+    private Integer level;
     /** 
      * 创建时间 
      **/
@@ -93,6 +98,14 @@ public class User implements Serializable {
 
     public void setType (Integer type) {
         this.type = type;
+    }
+
+    public Integer getLevel () {
+        return level;
+    }
+
+    public void setLevel (Integer level) {
+        this.level = level;
     }
 
     public void setGmtCreate(Date value) {

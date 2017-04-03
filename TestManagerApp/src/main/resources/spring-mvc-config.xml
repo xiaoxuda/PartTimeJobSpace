@@ -32,6 +32,10 @@
             <mvc:mapping path="/login.htm"/>
             <bean class="cn.orditech.interceptor.PassportInterceptor"/>
         </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**/*.htm"/>
+            <ref bean="authorizationInteceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
     <!-- 视图解析会按order从小到大尝试使用相应的解析器解析view，解析到就停止 -->

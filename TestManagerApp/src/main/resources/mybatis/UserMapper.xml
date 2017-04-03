@@ -9,10 +9,11 @@
             id as id,
             account as account,
             password as password,
-            name as name,
+            `name` as `name`,
             sex as sex,
             department as department,
-            type as type,
+            `type` as `type`,
+            `level` as `level`,
             gmt_create as gmtCreate,
             gmt_modified as gmtModified
     </sql>
@@ -26,6 +27,7 @@
             sex ,
             department ,
             type ,
+            level,
             gmt_create ,
             gmt_modified 
         ) VALUES (
@@ -36,6 +38,7 @@
             #{sex} ,
             #{department} ,
             #{type} ,
+            #{level},
             #{gmtCreate} ,
             #{gmtModified} 
         )
@@ -56,6 +59,7 @@
             sex = #{sex} ,
             department = #{department} ,
             type = #{type} ,
+            level = #{level},
             gmt_create = #{gmtCreate} ,
             gmt_modified = #{gmtModified} 
         WHERE
@@ -72,6 +76,7 @@
             <if test="sex!=null" >,sex = #{sex}</if>
             <if test="department!=null" >,department = #{department}</if>
             <if test="type!=null" >,type = #{type}</if>
+            <if test="level!=null" >,level = #{level}</if>
             <if test="gmtCreate!=null" >,gmt_create = #{gmtCreate}</if>
             <if test="gmtModified!=null" >,gmt_modified = #{gmtModified}</if>
         WHERE 
@@ -96,6 +101,7 @@
             <if test="sex!=null" > AND sex = #{sex}</if>
             <if test="department!=null" > AND department = #{department}</if>
             <if test="type!=null" > AND type = #{type}</if>
+            <if test="level!=null" > AND level = #{level}</if>
             <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
             <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
     </select>

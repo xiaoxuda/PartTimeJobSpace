@@ -1,7 +1,9 @@
 package cn.orditech.controller;
 
+import cn.orditech.annotation.Authorization;
 import cn.orditech.entity.Question;
 import cn.orditech.entity.TestPaper;
+import cn.orditech.enums.AuthorizationTypeEnum;
 import cn.orditech.result.JsonResult;
 import cn.orditech.service.QuestionService;
 import cn.orditech.service.TestPaperService;
@@ -29,7 +31,8 @@ public class TestPaperController {
     private TestPaperService testPaperService;
     @Autowired
     private QuestionService questionService;
-    
+
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/testPaperAdd")
     public String testPaperAdd(){
         return "test_paper_edit";
