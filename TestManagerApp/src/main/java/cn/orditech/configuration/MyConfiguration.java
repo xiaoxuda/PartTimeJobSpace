@@ -1,6 +1,6 @@
 package cn.orditech.configuration;
 
-import cn.orditech.interceptor.PassportInterceptor;
+import cn.orditech.interceptor.AuthorizationInteceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -12,12 +12,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Component
 public class MyConfiguration extends WebMvcConfigurerAdapter {
     @Autowired
-    PassportInterceptor passportInterceptor;
-
+    private AuthorizationInteceptor authorizationInteceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(passportInterceptor).addPathPatterns("/");
+        registry.addInterceptor (authorizationInteceptor).addPathPatterns ("/")
+                .excludePathPatterns ("/login.htm");
         super.addInterceptors(registry);
     }
 }

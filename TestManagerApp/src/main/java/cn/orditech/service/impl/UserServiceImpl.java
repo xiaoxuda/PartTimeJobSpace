@@ -50,26 +50,23 @@ public class UserServiceImpl extends BaseService<User> implements UserService{
     public Map<String,Object> register(User user){
         Map<String,Object> map = new HashMap<String, Object>();
         if(StringUtils.isBlank(user.getAccount())){
-            map.put("msgAccount","用户名不能为空");
+            map.put("msg","用户名不能为空");
             return map;
         }
         if(StringUtils.isBlank(user.getPassword())){
-            map.put("msgPassword","密码不能为空");
+            map.put("msg","密码不能为空");
             return map;
         }
         if(StringUtils.isBlank(user.getName())){
-            map.put("msgname","姓名不能为空");
+            map.put("msg","姓名不能为空");
             return map;
         }
         User exist = userDao.getUserByAccount(user.getAccount());
         if(exist != null){
-            map.put("msgusr","用户名已存在");
+            map.put("msg","用户名已存在");
             return map;
         }
         user.setPassword(MD5Utils.MD5(user.getPassword()));//密码使用MD5加密
-
-        Date date = new Date();
-        user.setGmtCreate(date);
 
         userDao.insert(user);
         map.put("msg","注册成功");
@@ -84,16 +81,16 @@ public class UserServiceImpl extends BaseService<User> implements UserService{
     public Map<String,Object> login(String account,String password){
         Map<String,Object> map = new HashMap<String, Object>();
         if(StringUtils.isBlank(account)){
-            map.put("msgAccount","用户名不能为空");
+            map.put("msg","用户名不能为空");
             return map;
         }
         if(StringUtils.isBlank(password)){
-            map.put("msgPassword","密码不能为空");
+            map.put("msg","密码不能为空");
             return map;
         }
-        User user = userDao.getUserByAccountAndPassword(account,password);
+        User user = userDao.getUserByAccountAndPassword(account,MD5Utils.MD5(password));
         if(user==null){
-            map.put("msgusr","用户名或密码错误");
+            map.put("msg","用户名或密码错误");
             return map;
         }else {
             map.put("msg","登录成功");

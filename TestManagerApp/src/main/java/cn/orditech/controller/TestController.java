@@ -7,12 +7,12 @@ import cn.orditech.result.JsonResult;
 import cn.orditech.service.QuestionService;
 import cn.orditech.service.TestPaperService;
 import cn.orditech.service.TestResultService;
+import cn.orditech.tool.RequestLocal;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.ibatis.io.ResolverUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +36,7 @@ public class TestController {
     private TestPaperService testPaperService;
     @Autowired
     private QuestionService questionService;
+
 
     @RequestMapping("/doTest")
     public String test (@RequestParam("id") Long id, Model model) {
@@ -59,6 +59,7 @@ public class TestController {
         model.addAttribute ("questions", questionsMap.values ());
         return "do_test";
     }
+
 
     @RequestMapping("/submitTest")
     @ResponseBody
@@ -106,7 +107,9 @@ public class TestController {
     }
 
     @RequestMapping("/testResultList")
-    public String testResultList (@RequestParam(value = "userId") Long userId, Model model) {
+    public String testResultList (Model model) {
+        Long userId = RequestLocal.get ().getUserId ();
+
         TestResult result = new TestResult ();
         result.setUserId (userId);
         List<TestResult> testResultList = testResultService.selectList (result);

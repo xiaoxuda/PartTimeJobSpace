@@ -8,8 +8,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="cn.orditech.entity.TestPaper" %>
 <%@ page import="java.util.List" %>
+<%@ page import="cn.orditech.enums.AuthorizationTypeEnum" %>
+<%@ page import="cn.orditech.tool.RequestLocal" %>
 <%
     List<TestPaper> questionList = (List<TestPaper>)request.getAttribute ("testPaperList");
+    boolean author = RequestLocal.get().getUser ().getLevel ()>=AuthorizationTypeEnum.ADMINISTRATOR.getLevel ();
 %>
 <%@ include file="header.jsp"%>
 <table class="table table-bordered table-hover table-condensed">
@@ -25,7 +28,10 @@
             <td><%=testPaper.getId()%></td>
             <td><%=testPaper.getTitle()%></td>
             <td><%=testPaper.getScore()%></td>
-            <td><a href="testPaperEdit.htm?id=<%=testPaper.getId()%>">编辑</a></td>
+            <td>
+                <%if(author){%><a href="testPaperEdit.htm?id=<%=testPaper.getId()%>">编辑</a><%}%>
+                <a href="doTest.htm?id=<%=testPaper.getId()%>">开始测试</a>
+            </td>
         </tr>
     <%}%>
     </tbody>

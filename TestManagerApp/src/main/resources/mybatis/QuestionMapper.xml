@@ -95,6 +95,7 @@
             <if test="score!=null" > AND score = #{score}</if>
             <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
             <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
+        order by gmt_modified
     </select>
 
     <select id="selectByIds" resultType="cn.orditech.entity.Question" parameterType="java.util.Map">
@@ -109,6 +110,7 @@
         FROM `question`
         WHERE deleted = false
         <if test="type!=null" > AND type = #{type}</if>
+        order by gmt_modified
         LIMIT #{offset},#{pageSize}
     </select>
 </mapper>

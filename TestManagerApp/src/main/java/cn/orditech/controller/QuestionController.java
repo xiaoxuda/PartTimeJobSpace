@@ -1,7 +1,9 @@
 package cn.orditech.controller;
 
+import cn.orditech.annotation.Authorization;
 import cn.orditech.entity.Question;
 import cn.orditech.entity.TestPaper;
+import cn.orditech.enums.AuthorizationTypeEnum;
 import cn.orditech.query.QuestionPageQuery;
 import cn.orditech.result.JsonResult;
 import cn.orditech.service.QuestionService;
@@ -27,14 +29,14 @@ import java.util.List;
 public class QuestionController {
     @Autowired
     private QuestionService questionService;
-    @Autowired
-    private TestPaperService testPaperService;
 
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/questionAdd")
     public String questionAdd(){
         return "question_edit";
     }
 
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/questionEdit")
     public String questionEdit(@RequestParam("id") Long id, Model model){
         Question question = questionService.selectOne (id);
@@ -44,6 +46,7 @@ public class QuestionController {
         return "question_edit";
     }
 
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/questionSave")
     @ResponseBody
     public String questionSave(Question question){
@@ -61,6 +64,7 @@ public class QuestionController {
         return JSONObject.toJSONString(result);
     }
 
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/questionList")
     public String questionList(Model model){
         List<Question> questionList = questionService.selectList (new Question ());
@@ -69,6 +73,7 @@ public class QuestionController {
         return "question_list";
     }
 
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/pageQuery")
     @ResponseBody
     public String pageQuery(QuestionPageQuery questionPageQuery){

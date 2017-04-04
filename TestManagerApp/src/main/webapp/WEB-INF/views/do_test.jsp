@@ -62,6 +62,9 @@ $(function(){
     }
 
     $("#save").click(function(e){
+        if(!confirm("确认现在交卷吗？")){
+            return;
+        }
         var param = parseParam();
         if(!param){
             return;

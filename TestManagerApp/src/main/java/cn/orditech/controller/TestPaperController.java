@@ -38,6 +38,7 @@ public class TestPaperController {
         return "test_paper_edit";
     }
 
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/testPaperEdit")
     public String testPaperEdit(@RequestParam("id") Long id, Model model){
         TestPaper testPaper = testPaperService.selectOne (id);
@@ -64,6 +65,7 @@ public class TestPaperController {
         return "test_paper_edit";
     }
 
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/testPaperSave")
     @ResponseBody
     public String testPaperSave(TestPaper testPaper){

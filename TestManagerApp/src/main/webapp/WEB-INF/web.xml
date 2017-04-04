@@ -52,7 +52,7 @@
     </filter-mapping> 
     <filter-mapping>
         <filter-name>loginFilter</filter-name>
-        <url-pattern>*.url</url-pattern>
+        <url-pattern>*.htm</url-pattern>
     </filter-mapping>
     <!-- Log4jConfigListener已经包含了WebAppRootListener,WebAppRootListener
     必须放在ContextLoaderListener之前 -->
@@ -86,6 +86,6 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>index.htm</welcome-file>
+        <welcome-file>login.htm</welcome-file>
     </welcome-file-list>
 </web-app>

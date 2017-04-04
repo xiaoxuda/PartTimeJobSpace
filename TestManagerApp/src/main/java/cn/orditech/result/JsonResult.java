@@ -1,6 +1,8 @@
 package cn.orditech.result;
 
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.Serializable;
 
 /**
@@ -57,5 +59,10 @@ public class JsonResult implements Serializable{
 
     public void setData (Object data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString(){
+        return JSON.toJSONString (this);
     }
 }

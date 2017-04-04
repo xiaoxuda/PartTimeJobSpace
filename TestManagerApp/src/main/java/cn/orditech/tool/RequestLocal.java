@@ -22,7 +22,7 @@ public class RequestLocal implements ApplicationContextAware{
     public static UserService userService;
     public static LoginTicketDaoImpl loginTicketService;
 
-    public static ThreadLocal<RequestLocal> threadLocal = new ThreadLocal<RequestLocal> ();
+    private static ThreadLocal<RequestLocal> threadLocal = new ThreadLocal<RequestLocal> ();
 
     public static boolean initThreadLocal(HttpServletRequest request,HttpServletResponse response){
         String ticket = null;
@@ -53,6 +53,14 @@ public class RequestLocal implements ApplicationContextAware{
             return true;
         }
         return false;
+    }
+
+    public static RequestLocal get(){
+        return threadLocal.get ();
+    }
+
+    public static void clear(){
+        threadLocal.remove ();
     }
 
     private HttpServletRequest request;

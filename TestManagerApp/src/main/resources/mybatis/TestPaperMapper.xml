@@ -82,6 +82,7 @@
             <if test="score!=null" > AND score = #{score}</if>
             <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
             <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
+        order by gmt_modified
     </select>
 
     <select id="findByIds" resultType="cn.orditech.entity.TestPaper" parameterType="java.util.ArrayList">

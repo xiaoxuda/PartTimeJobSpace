@@ -1,10 +1,9 @@
 package cn.orditech.interceptor;
 
 import cn.orditech.annotation.Authorization;
-import cn.orditech.entity.HostHolder;
 import cn.orditech.entity.User;
 import cn.orditech.enums.AuthorizationTypeEnum;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.orditech.tool.RequestLocal;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -18,9 +17,6 @@ import java.lang.reflect.Method;
  */
 @Component("authorizationInteceptor")
 public class AuthorizationInteceptor extends HandlerInterceptorAdapter {
-    @Autowired
-    private HostHolder hostHolder;
-
     @Override
     public boolean preHandle (HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Method method = ((HandlerMethod) handler).getMethod ();
@@ -29,11 +25,11 @@ public class AuthorizationInteceptor extends HandlerInterceptorAdapter {
             return true;
         } else {
             AuthorizationTypeEnum typeEnum = authorization.value ();
-            /*User user = hostHolder.getUser ();
+            User user = RequestLocal.get ().getUser ();
             if (user.getType () >= typeEnum.getLevel ()) {
                 return true;
-            }*/
-            return true;
+            }
+            return false;
         }
     }
 

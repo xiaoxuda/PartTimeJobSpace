@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: kimi
@@ -12,10 +11,10 @@
         <span>欢迎登录考试管理系统</span>
         <input type="hidden" name="message" id="message" value="${message}" />
     </div>
-<form class="form-inline" action="<c:url value="/register.htm" />" method="post">
+<form class="form-inline">
     <div class="form-group">
         <label class="control-label" for="userAccount">用户名</label>
-        <input name="account" class="form-control" id="userAccount" placeholder="张三">
+        <input name="account" class="form-control" id="userAccount" placeholder="">
     </div>
     <br>
     <br>
@@ -33,7 +32,7 @@
     </div>
 </form>
 <div class="col-sm-offset-1 col-sm-2">
-    <button id="register" class="btn btn-default">登录</button>
+    <button id="login" class="btn btn-default">登录</button>
 </div>
 
 <script type="text/javascript">
@@ -49,43 +48,26 @@
             alert("密码不能为空");
             return;
         }
-        var name = $("#userName").val();
-        if(name ==""){
-            alert("请输入姓名");
-            return;
-        }
-        var department = $("#userDepartment").val();
-        if(department ==""){
-            alert("请选择部门")
-            return;
-        }
-        var type = $("#userType").val();
-        var sex = $("#sex1").val();
-        if(sex ==""){
-            sex = $("#sex2").val();
-        }
 
         var rememberMe = $("#rememberme").val();
+
         return {
             account:account,
             password:password,
-            name:name,
-            department:department,
-            type:type,
-            sex:sex,
             rememberMe:rememberMe
         };
 
     }
 
-    $("#register").click(function(e){
+    $("#login").click(function(e){
         var param = parseParam();
-        $.get("register.htm",param,function(sucess,result){
-            if(result.success){
-                alert("保存成功");
-                window.location.href = "register.htm";
+        $.post("doLogin.htm",param,function(result,sucess){
+            var json = JSON.parse(result);
+            if(json.success){
+                alert("登录成功");
+                window.location.href = "/test/testResultList.htm";
             } else{
-                alert("保存失败",result.message);
+                alert("登录失败",json.message);
             }
 
         });

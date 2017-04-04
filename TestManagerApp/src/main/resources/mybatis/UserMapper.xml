@@ -20,7 +20,6 @@
 
     <insert id="insert" parameterType="cn.orditech.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `user` (
-            id ,
             account ,
             password ,
             name ,
@@ -29,9 +28,8 @@
             type ,
             level,
             gmt_create ,
-            gmt_modified 
+            gmt_modified
         ) VALUES (
-            #{id} ,
             #{account} ,
             #{password} ,
             #{name} ,
@@ -40,7 +38,7 @@
             #{type} ,
             #{level},
             #{gmtCreate} ,
-            #{gmtModified} 
+            #{gmtModified}
         )
     </insert>
 

@@ -6,7 +6,7 @@
   Time: 10:05
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="header.jsp"%>
     <div class="logintop">
         <span>欢迎注册考试管理系统</span>
@@ -108,14 +108,14 @@
 
     $("#register").click(function(e){
         var param = parseParam();
-        $.get("register.htm",param,function(sucess,result){
-            if(result.success){
-                alert("保存成功");
-                window.location.href = "register.htm";
-            } else{
-                alert("保存失败",result.message);
+        $.post("register.htm",param,function(result,success){
+            var json = JSON.parse(result);
+            if(json.success){
+                alert("注册成功");
+                window.location.href = "login.htm";
+            }else{
+                alert("注册失败,",json.message);
             }
-
         });
     });
 
