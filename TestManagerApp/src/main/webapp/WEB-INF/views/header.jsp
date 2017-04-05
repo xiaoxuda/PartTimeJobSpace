@@ -1,4 +1,4 @@
-<%--
+<%@ page import="cn.orditech.enums.AuthorizationTypeEnum" %><%--
   Created by IntelliJ IDEA.
   User: kimi
   Date: 2017/3/25
@@ -8,8 +8,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
     <title>考试管理系统</title>
-    <meta http-equiv="charset" content="UTF-8">
 
     <script src="https://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
 
@@ -23,36 +25,55 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <style>
+        body{
+            padding-left:10%;
+            padding-right:10%;
+        }
         .top{
             position: relative;
             width: 100%;
             height: 150px;
+            background-image: url("/img/top_img.jpg");
         }
-        .left_nav{
-            position: relative;
-            float:left;
-            width: 15%;
+        .nav{
+            width: 100%;
         }
         .content{
             float:left;
-            width:80%;
-        }
-        .sub_content {
-            width: 800px;
+            width:100%;
             margin-left: auto;
             margin-right: auto;
         }
-
+        .stroke {
+            padding-top: 50px;
+            text-align: center;
+            color: white;
+            -webkit-text-stroke: 1px black;
+            letter-spacing: 0.4em;
+        }
     </style>
 </head>
 <body>
-    <div class="top"></div>
-    <div class="left_nav">
-        <a href="/question/questionList.htm" data-level="0">试题库</a><br/>
-        <a href="/question/questionEdit.htm" data-level="0">编辑试题</a><br/>
-        <a href="/testPaper/testPaperList.htm" data-level="0">试卷库</a><br/>
-        <a href="/testPaper/testPaperAdd.htm" data-level="0">添加试卷</a><br/>
-        <a href="/test/testResultList.htm" data-level="0">考试成绩</a><br/>
-    </div>
-    <div class="content"><div class="sub_content">
+    <div class="top"><h1 class="stroke">安全考试管理系统</h1></div>
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active">
+            <a href="/admin/userList.htm" data-level="<%=AuthorizationTypeEnum.ADMINISTRATOR.getLevel()%>">人员管理</a>
+        </li>
+        <li role="presentation">
+            <a href="/question/questionList.htm" data-level="<%=AuthorizationTypeEnum.ADMINISTRATOR.getLevel()%>">试题库</a>
+        </li>
+        <li role="presentation">
+            <a href="/question/questionEdit.htm" data-level="<%=AuthorizationTypeEnum.ADMINISTRATOR.getLevel()%>">编辑试题</a>
+        </li>
+        <li role="presentation">
+            <a href="/testPaper/testPaperList.htm" data-level="<%=AuthorizationTypeEnum.GENERAL_STAFF.getLevel()%>">试卷库</a>
+        </li>
+        <li role="presentation">
+            <a href="/testPaper/testPaperAdd.htm" data-level="<%=AuthorizationTypeEnum.ADMINISTRATOR.getLevel()%>">添加试卷</a>
+        </li>
+        <li role="presentation">
+            <a href="/test/testResultList.htm" data-level="<%=AuthorizationTypeEnum.GENERAL_STAFF.getLevel()%>">考试成绩</a>
+        </li>
+    </ul>
+    <div class="content">
 

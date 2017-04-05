@@ -7,32 +7,40 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="header.jsp"%>
-    <div class="logintop">
-        <span>欢迎登录考试管理系统</span>
-        <input type="hidden" name="message" id="message" value="${message}" />
-    </div>
-<form class="form-inline">
+<style>
+    .login-form{
+        width:320px;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:75px;
+    }
+</style>
+<div class="login-form">
+<form class="form-horizontal">
     <div class="form-group">
-        <label class="control-label" for="userAccount">用户名</label>
-        <input name="account" class="form-control" id="userAccount" placeholder="">
+        <label class="control-label col-sm-3" for="userAccount">用户名:</label>
+        <div class=" col-sm-9">
+            <input id="userAccount" name="account" class="form-control" placeholder=""/>
+        </div>
     </div>
-    <br>
-    <br>
     <div class="form-group">
-        <label class="control-label" for="userPassword">密码</label>
-        <input name="password" class="form-control" id="userPassword" type="password" placeholder="**">
+        <label class="control-label col-sm-3" for="userPassword">密码:</label>
+        <div class=" col-sm-9">
+            <input id="userPassword" name="password" class="form-control" type="password" placeholder=""/>
+        </div>
     </div>
-
-    <br>
-    <br>
-    <div class="checkbox">
-        <label>
-            <input type="checkbox" id="rememberme"> 记住我
-        </label>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="rememberme"> 记住我
+                </label>
+            </div>
+        </div>
     </div>
 </form>
-<div class="col-sm-offset-1 col-sm-2">
-    <button id="login" class="btn btn-default">登录</button>
+<div class="form-group col-sm-offset-3 col-sm-4">
+    <button id="login" class="btn btn-default">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
 </div>
 
 <script type="text/javascript">
@@ -69,10 +77,8 @@
             } else{
                 alert("登录失败",json.message);
             }
-
         });
     });
-
 </script>
-
+</div>
 <%@ include file="tail.jsp"%>
