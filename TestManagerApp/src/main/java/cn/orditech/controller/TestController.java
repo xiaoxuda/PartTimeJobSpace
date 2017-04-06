@@ -100,7 +100,7 @@ public class TestController {
             }
         }
 
-        result.setUserId (1L);//FIXME 改正
+        result.setUserId (RequestLocal.get ().getUserId ());
         result.setScore (score);
         testResultService.insert (result);
         return JSON.toJSONString (JsonResult.successResult (true));
@@ -113,6 +113,10 @@ public class TestController {
         TestResult result = new TestResult ();
         result.setUserId (userId);
         List<TestResult> testResultList = testResultService.selectList (result);
+        if(testResultList.isEmpty ()){
+            model.addAttribute ("testResultList", Lists.newArrayList ());
+            return "test_result_list";
+        }
         Map<Long, JSONObject> testResultMap = Maps.newHashMap ();
         for (TestResult testResult : testResultList) {
             JSONObject json = new JSONObject ();
@@ -120,6 +124,7 @@ public class TestController {
             json.put ("score", testResult.getScore ());
             testResultMap.put (testResult.getId (), json);
         }
+
         List<TestPaper> testPaperList = testPaperService.findByIds (Lists
                 .newArrayList (testResultMap.keySet ().iterator ()));
         for (TestPaper testPaper : testPaperList) {

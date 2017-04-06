@@ -56,7 +56,8 @@ public class RequestLocal implements ApplicationContextAware{
     }
 
     public static RequestLocal get(){
-        return threadLocal.get ();
+        RequestLocal requestLocal = threadLocal.get ();
+        return requestLocal==null?new RequestLocal ():requestLocal;
     }
 
     public static void clear(){

@@ -1,4 +1,6 @@
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+<%@ page import="cn.orditech.enums.SexTypeEnum" %>
+<%@ page import="java.util.List" %>
+<%@ page import="cn.orditech.entity.Department" %>
 <%--
   Created by IntelliJ IDEA.
   User: kimi
@@ -8,73 +10,77 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="header.jsp"%>
-    <div class="logintop">
-        <span>欢迎注册考试管理系统</span>
-        <input type="hidden" name="message" id="message" value="${message}" />
-    </div>
-<form class="form-inline" action="<c:url value="/register.htm" />" method="post">
-    <div class="form-group">
-        <label class="control-label" for="userAccount">用户名</label>
-        <input name="account" class="form-control" id="userAccount" placeholder="张三">
-    </div>
-    <br>
-    <br>
-    <div class="form-group">
-        <label class="control-label" for="userPassword">密码</label>
-        <input name="password" class="form-control" id="userPassword" type="password" placeholder="**">
-    </div>
-    <br>
-    <br>
-    <div class="form-group">
-        <label class="control-label" for="userName">真实姓名</label>
-        <input name="name" class="form-control" id="userName" placeholder="姓名">
-    </div>
-    <br>
-    <br>
-    <div class="form-group">
-    <label class="control-label" for="userDepartment">所属部门</label>
-    <input name="department" class="form-control" id="userDepartment" placeholder="部门">
-    </div>
-    <br>
-    <br>
-    <div class="form-group">
-        <input name="type" type="hidden" class="form-control" id="userType" value="1" >
-    </div>
-    <div class="radio">
-        <label>
-            <input type="radio" name="sex" id="sex1" value="1" checked>
-            男
-        </label>
-    </div>
-    <div class="radio">
-        <label>
-            <input type="radio" name="sex" id="sex2" value="2">
-            女
-        </label>
-    </div>
-    <br>
-    <br>
-    <div class="checkbox">
-        <label>
-            <input type="checkbox" id="rememberme"> 记住我
-        </label>
-    </div>
-</form>
-<div class="col-sm-offset-1 col-sm-2">
-    <button id="register" class="btn btn-default">注册</button>
-</div>
+<%
+    List<Department> departments = (List<Department>)request.getAttribute ("departments");
+%>
+<style>
+    .register-form{
+        width:320px;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:75px;
+    }
+</style>
+<div class="register-form">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="userDepartment">部门:</label>
+            <div class=" col-sm-8">
+                <select id="userDepartment" class="form-control" value="">
+                    <option value=""></option>
+                    <%for(Department department:departments){%>
+                    <option value="<%=department.getCode()%>"><%=department.getName()%></option>
+                    <%}%>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="userName">姓名:</label>
+            <div class=" col-sm-8">
+                <input id="userName" name="name" class="form-control" placeholder=""/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">性别:</label>
+            <label class="radio-inline" style="margin-left:13px;">
+                <input type="radio" name="sexRadio" class="sex" value="<%=SexTypeEnum.MAN.getType()%>"> 男
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="sexRadio" class="sex" value="<%=SexTypeEnum.WOMAN.getType()%>"> 女
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="userAccount">工号:</label>
+            <div class=" col-sm-8">
+                <input id="userAccount" name="account" class="form-control" placeholder=""/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="userPassword">密码:</label>
+            <div class=" col-sm-8">
+                <input id="userPassword" name="password" class="form-control" type="password" placeholder=""/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="userPasswordConfirm">确认密码:</label>
+            <div class=" col-sm-8">
+                <input id="userPasswordConfirm" name="password" class="form-control" type="password" placeholder=""/>
+            </div>
+        </div>
 
-<script type="text/javascript">
+    </form>
+    <div class="form-group col-sm-offset-4 col-sm-4">
+        <button id="register" class="btn btn-default">注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
+    </div>
+<script type="text/javascript">register
+    $("#userDepartment option").click(function(){
+        $("#userDepartment").attr("value",$(this).attr("value"));
+    });
+
     function parseParam(){
-        var account = $("#userAccount").val();
-        if(account==""){
-            alert("用户名不能为空");
-            return;
-        }
-
-        var password = $("#userPassword").val();
-        if(password==""){
-            alert("密码不能为空");
+        var department = $("#userDepartment").attr("value");
+        if(department==""){
+            alert("请选择所属部门");
             return;
         }
         var name = $("#userName").val();
@@ -82,33 +88,44 @@
             alert("请输入姓名");
             return;
         }
-        var department = $("#userDepartment").val();
-        if(department ==""){
-            alert("请选择部门")
+        var sexEle=$(".sex:checked");
+        if(sexEle.length==0){
+            alert("请确定性别");
             return;
         }
-        var type = $("#userType").val();
-        var sex = $("#sex1").val();
-        if(sex ==""){
-            sex = $("#sex2").val();
+        var sex = $(sexEle).val();
+        var account = $("#userAccount").val();
+        if(account==""){
+            alert("请输入工号");
+            return;
+        }
+        var password = $("#userPassword").val();
+        if(password==""){
+            alert("请输入密码");
+            return;
+        }
+        var passwordConfirm = $("#userPasswordConfirm").val();
+        if(password!=passwordConfirm){
+            alert("密码不一致");
+            return;
         }
 
-        var rememberMe = $("#rememberme").val();
         return {
-            account:account,
-            password:password,
-            name:name,
             department:department,
-            type:type,
+            account:account,
+            name:name,
             sex:sex,
-            rememberMe:rememberMe
+            password:password
         };
 
     }
 
     $("#register").click(function(e){
         var param = parseParam();
-        $.post("register.htm",param,function(result,success){
+        if(!param){
+            return;
+        }
+        $.post("doRegister.htm",param,function(result,success){
             var json = JSON.parse(result);
             if(json.success){
                 alert("注册成功");
@@ -120,5 +137,5 @@
     });
 
 </script>
-
+</div>
 <%@ include file="tail.jsp"%>

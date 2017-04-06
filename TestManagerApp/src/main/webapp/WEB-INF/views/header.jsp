@@ -1,4 +1,6 @@
-<%@ page import="cn.orditech.enums.AuthorizationTypeEnum" %><%--
+<%@ page import="cn.orditech.enums.AuthorizationTypeEnum" %>
+<%@ page import="cn.orditech.entity.User" %>
+<%@ page import="cn.orditech.tool.RequestLocal" %><%--
   Created by IntelliJ IDEA.
   User: kimi
   Date: 2017/3/25
@@ -6,6 +8,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    User user = RequestLocal.get ().getUser ();
+    boolean logined = user == null?false:true;
+%>
 <html>
 <head>
 
@@ -36,7 +42,21 @@
             background-image: url("/img/top_img.jpg");
         }
         .nav{
-            width: 100%;
+            width: 85%;
+            float:left;
+        }
+        .login-mark {
+            height: 42px;
+            text-align: center;
+            float: left;
+            width: 15%;
+            border-bottom: 1px solid #ddd;
+        }
+        .login-mark > a {
+            margin-right: 2px;
+            line-height: 40px;
+            border: 1px solid transparent;
+            border-radius: 4px 4px 0 0;
         }
         .content{
             float:left;
@@ -75,5 +95,14 @@
             <a href="/test/testResultList.htm" data-level="<%=AuthorizationTypeEnum.GENERAL_STAFF.getLevel()%>">考试成绩</a>
         </li>
     </ul>
+    <div class="login-mark">
+        <%if(logined){%>
+        <a disabled="true"><%=user.getName ()%>,</a>
+        <a href="/logout.htm">注销</a>
+        <%}else{%>
+        <a href="/register.htm">注册</a>
+        <a href="/login.htm">登录</a>
+        <%}%>
+    </div>
     <div class="content">
 

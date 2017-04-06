@@ -27,7 +27,7 @@ public class User implements Serializable {
     /** 
      * 性别（1：男，2：女） 
      **/
-    private java.lang.Boolean sex;
+    private java.lang.Integer sex;
     /** 
      * 所属部门编号 
      **/
@@ -77,14 +77,15 @@ public class User implements Serializable {
     public java.lang.String getName() {
         return this.name;
     }
-    
-    public void setSex(java.lang.Boolean value) {
-        this.sex = value;
+
+    public Integer getSex () {
+        return sex;
     }
-    public java.lang.Boolean getSex() {
-        return this.sex;
+
+    public void setSex (Integer sex) {
+        this.sex = sex;
     }
-    
+
     public void setDepartment(java.lang.String value) {
         this.department = value;
     }

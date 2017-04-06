@@ -1,8 +1,11 @@
 package cn.orditech.controller;
 
+import cn.orditech.entity.Department;
 import cn.orditech.entity.User;
 import cn.orditech.enums.AuthorizationTypeEnum;
+import cn.orditech.enums.UserTypeEnum;
 import cn.orditech.result.JsonResult;
+import cn.orditech.service.DepartmentService;
 import cn.orditech.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,31 +25,32 @@ import java.util.Map;
  */
 @Controller
 public class UserController {
+    private static final Logger logger = LoggerFactory.getLogger (UserController.class);
+
     @Autowired
     private UserService userService;
-    private static final Logger logger = LoggerFactory.getLogger (UserController.class);
+    @Autowired
+    private DepartmentService departmentService;
 
     @RequestMapping("/register")
     public String addUser (Model model) {
-        model.addAttribute ("loginOrRegister", "0");
+        List<Department> departments = departmentService.selectList (new Department ());
+
+        model.addAttribute ("departments", departments);
         return "user_register";
     }
 
     @RequestMapping(path = "/doRegister", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public String register (User user,
-                            @RequestParam(value = "rememberMe", required = false) String rememberMe,
-                            HttpServletResponse response) {
+    public String register (User user,HttpServletResponse response) {
         try {
             user.setLevel (AuthorizationTypeEnum.GENERAL_STAFF.getLevel ());
+            user.setType (UserTypeEnum.GENERAL.getType ());
             Map<String, Object> map = userService.register (user);
             //服务器端注册成功后，下发T票
             if (map.containsKey ("ticket")) {
                 Cookie cookie = new Cookie ("ticket", map.get ("ticket").toString ());
                 cookie.setPath ("/");
-                if (StringUtils.equals (rememberMe, "on")) {
-                    cookie.setMaxAge (3600 * 24 * 3);//cookie有效时间
-                }
                 response.addCookie (cookie);
                 return JsonResult.successResult (true).toString ();
             } else {
@@ -93,6 +98,6 @@ public class UserController {
     @RequestMapping(path = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
     public String logout (@CookieValue("ticket") String ticket) {
         userService.logout (ticket, 1);
-        return "redirect:/index.htm";
+        return "user_login";
     }
 }
