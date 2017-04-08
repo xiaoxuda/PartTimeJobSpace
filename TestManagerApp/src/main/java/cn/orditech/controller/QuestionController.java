@@ -31,14 +31,11 @@ public class QuestionController {
     private QuestionService questionService;
 
     @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
-    @RequestMapping("/questionAdd")
-    public String questionAdd(){
-        return "question_edit";
-    }
-
-    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/questionEdit")
-    public String questionEdit(@RequestParam("id") Long id, Model model){
+    public String questionEdit(@RequestParam(value = "id",required = false) Long id, Model model){
+        if(id==null){
+            return "question_edit";
+        }
         Question question = questionService.selectOne (id);
         model.addAttribute ("question",question);
         model.addAttribute ("isEdit",true);

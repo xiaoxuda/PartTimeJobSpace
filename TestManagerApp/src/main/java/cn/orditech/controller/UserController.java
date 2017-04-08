@@ -1,5 +1,6 @@
 package cn.orditech.controller;
 
+import cn.orditech.annotation.Authorization;
 import cn.orditech.entity.Department;
 import cn.orditech.entity.User;
 import cn.orditech.enums.AuthorizationTypeEnum;
@@ -7,6 +8,8 @@ import cn.orditech.enums.UserTypeEnum;
 import cn.orditech.result.JsonResult;
 import cn.orditech.service.DepartmentService;
 import cn.orditech.service.UserService;
+import cn.orditech.tool.RequestLocal;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,6 +101,8 @@ public class UserController {
     @RequestMapping(path = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
     public String logout (@CookieValue("ticket") String ticket) {
         userService.logout (ticket, 1);
+        RequestLocal.clear ();
         return "user_login";
     }
+
 }

@@ -20,7 +20,7 @@
         <td>ID</td>
         <td>试卷描述</td>
         <td>总分数</td>
-        <td>操作</td>
+        <td>操作&nbsp;&nbsp;&nbsp;&nbsp;<a href="testPaperEdit.htm">添加试卷</a></td>
     </thead>
     <tbody>
     <%for(TestPaper testPaper:questionList){%>
@@ -29,8 +29,8 @@
             <td><%=testPaper.getTitle()%></td>
             <td><%=testPaper.getScore()%></td>
             <td>
-                <%if(author){%><a href="testPaperEdit.htm?id=<%=testPaper.getId()%>">编辑</a><%}%>
-                <a href="doTest.htm?id=<%=testPaper.getId()%>">开始测试</a>
+                <%if(author){%><a href="testPaperEdit.htm?id=<%=testPaper.getId()%>">编辑&nbsp;&nbsp;</a><%}%>
+                <a href="/test/startTest.htm?id=<%=testPaper.getId()%>">开始测试</a>
             </td>
         </tr>
     <%}%>

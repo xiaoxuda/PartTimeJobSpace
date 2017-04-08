@@ -71,12 +71,15 @@
             -webkit-text-stroke: 1px black;
             letter-spacing: 0.4em;
         }
+        a{
+            cursor:pointer;
+        }
     </style>
 </head>
 <body>
     <div class="top"><h1 class="stroke">安全考试管理系统</h1></div>
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active">
+        <li role="presentation">
             <a href="/admin/userList.htm" data-level="<%=AuthorizationTypeEnum.ADMINISTRATOR.getLevel()%>">人员管理</a>
         </li>
         <li role="presentation">
@@ -89,12 +92,31 @@
             <a href="/testPaper/testPaperList.htm" data-level="<%=AuthorizationTypeEnum.GENERAL_STAFF.getLevel()%>">试卷库</a>
         </li>
         <li role="presentation">
-            <a href="/testPaper/testPaperAdd.htm" data-level="<%=AuthorizationTypeEnum.ADMINISTRATOR.getLevel()%>">添加试卷</a>
+            <a href="/testPaper/testPaperEdit.htm" data-level="<%=AuthorizationTypeEnum.ADMINISTRATOR.getLevel()%>">试卷编辑</a>
         </li>
         <li role="presentation">
             <a href="/test/testResultList.htm" data-level="<%=AuthorizationTypeEnum.GENERAL_STAFF.getLevel()%>">考试成绩</a>
         </li>
     </ul>
+    <script>
+        <%if(logined){%>
+        var uri = window.location.href;
+        var level = <%=user.getLevel()%>;
+        $(".nav li a").each(function(){
+            var parent = $(this).parent("li:first");
+            if(uri.indexOf($(this).attr("href"))>-1){
+                $(parent).addClass("active");
+            }else{
+                $(parent).removeClass("active");
+            }
+            if($(this).data("level")>level){
+                $(parent).hide();
+            }else{
+                $(parent).show();
+            }
+        });
+        <%}%>
+    </script>
     <div class="login-mark">
         <%if(logined){%>
         <a disabled="true"><%=user.getName ()%>,</a>

@@ -19,6 +19,15 @@ public enum AuthorizationTypeEnum {
         this.level = level;
     }
 
+    public static AuthorizationTypeEnum getByLevel(Integer level){
+        for(AuthorizationTypeEnum typeEnum:values ()){
+            if(typeEnum.getLevel ().equals (level)){
+                return typeEnum;
+            }
+        }
+        return null;
+    }
+
     public static AuthorizationTypeEnum getByType(String type){
         for(AuthorizationTypeEnum typeEnum:values ()){
             if(typeEnum.getType ().equals (type)){

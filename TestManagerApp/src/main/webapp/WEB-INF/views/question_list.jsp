@@ -19,7 +19,7 @@
         <td>试题类型</td>
         <td>试题描述</td>
         <td>默认分数</td>
-        <td>操作</td>
+        <td>操作&nbsp;&nbsp;&nbsp;&nbsp;<a href="questionEdit.htm">添加试题</a></td>
     </thead>
     <tbody>
     <%for(Question question:questionList){%>

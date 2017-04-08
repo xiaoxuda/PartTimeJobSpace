@@ -33,14 +33,11 @@ public class TestPaperController {
     private QuestionService questionService;
 
     @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
-    @RequestMapping("/testPaperAdd")
-    public String testPaperAdd(){
-        return "test_paper_edit";
-    }
-
-    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/testPaperEdit")
-    public String testPaperEdit(@RequestParam("id") Long id, Model model){
+    public String testPaperEdit(@RequestParam(value = "id",required = false) Long id, Model model){
+        if(id==null){
+            return "test_paper_edit";
+        }
         TestPaper testPaper = testPaperService.selectOne (id);
         JSONArray questions = JSONArray.parseArray (testPaper.getQuestions ());
 

@@ -38,8 +38,8 @@ public class TestController {
     private QuestionService questionService;
 
 
-    @RequestMapping("/doTest")
-    public String test (@RequestParam("id") Long id, Model model) {
+    @RequestMapping("/startTest")
+    public String startTest (@RequestParam("id") Long id, Model model) {
         TestPaper testPaper = testPaperService.selectOne (id);
         JSONArray questions = JSON.parseArray (testPaper.getQuestions ());
         Map<Long, JSONObject> questionsMap = Maps.newLinkedHashMap ();
@@ -59,7 +59,6 @@ public class TestController {
         model.addAttribute ("questions", questionsMap.values ());
         return "do_test";
     }
-
 
     @RequestMapping("/submitTest")
     @ResponseBody
