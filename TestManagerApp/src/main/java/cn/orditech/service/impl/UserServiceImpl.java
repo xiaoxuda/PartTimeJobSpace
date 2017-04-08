@@ -1,6 +1,7 @@
 
 package cn.orditech.service.impl;
 
+import cn.orditech.dao.UserDao;
 import cn.orditech.dao.impl.LoginTicketDaoImpl;
 import cn.orditech.dao.impl.UserDaoImpl;
 import cn.orditech.entity.LoginTicket;
@@ -22,13 +23,13 @@ import java.util.*;
 @Service
 public class UserServiceImpl extends BaseService<User> implements UserService{
     @Autowired
-    private UserDaoImpl userDao;
+    private UserDao userDao;
 
     @Autowired
     private LoginTicketDaoImpl loginTicketDao;
 
     protected BaseDao<User> getDao(){
-        return this.userDao;
+        return (UserDaoImpl)this.userDao;
     }
 
     @Override
@@ -103,6 +104,16 @@ public class UserServiceImpl extends BaseService<User> implements UserService{
     @Override
     public void logout(String ticket,int status){
         loginTicketDao.updateTicketStatus(ticket,status);
+    }
+
+    @Override
+    public List<User> selectUserByDepartment (String code) {
+        return userDao.selectUserByDepartment(code);
+    }
+
+    @Override
+    public List<Long> selectAllUserIds () {
+        return userDao.selectAllUserIds ();
     }
 
     private String addLoginTicket(Long userId){

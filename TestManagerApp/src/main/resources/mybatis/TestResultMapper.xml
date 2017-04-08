@@ -89,5 +89,14 @@
         order by id desc
     </select>
 
+    <select id="selectListByUserIds" parameterType="java.util.Map" resultType="cn.orditech.entity.TestResult">
+        select <include refid="columnMap"></include>
+        from `test_result`
+        where user_id in
+        <foreach collection="userIds" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </select>
+
 </mapper>
 

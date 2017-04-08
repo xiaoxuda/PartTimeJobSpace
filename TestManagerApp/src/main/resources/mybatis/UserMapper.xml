@@ -117,5 +117,16 @@
         WHERE
         account = #{account} AND password = #{password}
     </select>
+
+    <select id="selectUserByDepartment" resultType="cn.orditech.entity.User">
+        select <include refid="columnMap"/>
+        from `user`
+        where department = #{code}
+    </select>
+
+    <select id="selectAllUserIds" resultType="java.lang.Long">
+        select id
+        from `user`
+    </select>
 </mapper>
 

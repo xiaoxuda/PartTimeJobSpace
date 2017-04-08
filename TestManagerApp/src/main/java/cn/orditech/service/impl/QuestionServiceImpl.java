@@ -1,6 +1,7 @@
 
 package cn.orditech.service.impl;
 
+import cn.orditech.dao.QuestionDao;
 import cn.orditech.dao.impl.QuestionDaoImpl;
 import cn.orditech.query.QuestionPageQuery;
 import cn.orditech.service.QuestionService;
@@ -19,10 +20,10 @@ import java.util.List;
 @Service
 public class QuestionServiceImpl extends BaseService<Question> implements QuestionService{
     @Autowired
-    private QuestionDaoImpl questionDao;
+    private QuestionDao questionDao;
 
     protected BaseDao<Question> getDao(){
-        return this.questionDao;
+        return (QuestionDaoImpl)this.questionDao;
     }
 
     @Override

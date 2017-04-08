@@ -84,4 +84,17 @@ public interface UserService{
      * @param status
      */
     void logout(String ticket,int status);
+
+    /**
+     * 按部门查询所有用户ID
+     * @param code
+     * @return
+     */
+    List<User> selectUserByDepartment(String code);
+
+    /**
+     * 返回所有用户ID
+     * @return
+     */
+    List<Long> selectAllUserIds();
 }

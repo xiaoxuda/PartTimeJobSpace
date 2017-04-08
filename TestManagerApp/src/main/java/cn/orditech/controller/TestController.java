@@ -3,10 +3,13 @@ package cn.orditech.controller;
 import cn.orditech.entity.Question;
 import cn.orditech.entity.TestPaper;
 import cn.orditech.entity.TestResult;
+import cn.orditech.entity.User;
+import cn.orditech.enums.AuthorizationTypeEnum;
 import cn.orditech.result.JsonResult;
 import cn.orditech.service.QuestionService;
 import cn.orditech.service.TestPaperService;
 import cn.orditech.service.TestResultService;
+import cn.orditech.service.UserService;
 import cn.orditech.tool.RequestLocal;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -36,6 +39,8 @@ public class TestController {
     private TestPaperService testPaperService;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private UserService userService;
 
 
     @RequestMapping("/startTest")
@@ -107,15 +112,36 @@ public class TestController {
 
     @RequestMapping("/testResultList")
     public String testResultList (Model model) {
-        Long userId = RequestLocal.get ().getUserId ();
+        User user = RequestLocal.get ().getUser ();
+        List<User> users = Lists.newArrayList ();
+        if(AuthorizationTypeEnum.MANAGER_STAFF.getLevel ().equals (user.getLevel ())){
+            users.addAll(userService.selectUserByDepartment(user.getDepartment ()));
+        }else if(AuthorizationTypeEnum.ADMINISTRATOR.getLevel ().equals (user.getLevel ())){
+            users.addAll(userService.selectList (new User ()));
+        }else{
+            users.add(user);
+        }
+        Map<Long,User> userMap = Maps.newHashMap ();
+        for(User u:users){
+            userMap.put (u.getId (),u);
+        }
 
-        TestResult result = new TestResult ();
-        result.setUserId (userId);
-        List<TestResult> testResultList = testResultService.selectList (result);
+        List<TestResult> testResultList = testResultService.selectListByUserIds (Lists.newArrayList (userMap.keySet ()));
         if(testResultList.isEmpty ()){
             model.addAttribute ("testResultList", Lists.newArrayList ());
             return "test_result_list";
         }
+
+        List<Long> testPaperIds = Lists.newArrayList ();
+        for(TestResult result : testResultList){
+            testPaperIds.add(result.getTestId ());
+        }
+        List<TestPaper> testPaperList = testPaperService.findByIds (testPaperIds);
+        Map<Long,TestPaper> paperMap = Maps.newHashMap ();
+        for(TestPaper paper : testPaperList){
+            paperMap.put (paper.getId(),paper);
+        }
+
         Map<Long, JSONObject> testResultMap = Maps.newHashMap ();
         for (TestResult testResult : testResultList) {
             JSONObject json = new JSONObject ();
@@ -124,15 +150,18 @@ public class TestController {
             testResultMap.put (testResult.getId (), json);
         }
 
-        List<TestPaper> testPaperList = testPaperService.findByIds (Lists
-                .newArrayList (testResultMap.keySet ().iterator ()));
-        for (TestPaper testPaper : testPaperList) {
-            JSONObject jsonObject = testResultMap.get (testPaper.getId ());
-            if (jsonObject != null) {
-                jsonObject.put ("title",testPaper.getTitle ());
-            }
+        List<JSONObject> testResultJsonList = Lists.newArrayList ();
+        for (TestResult testResult : testResultList) {
+            JSONObject json = new JSONObject ();
+            json.put("id",testResult.getId());
+            json.put("testId",testResult.getTestId ());
+            json.put("title",paperMap.get(testResult.getTestId ()).getTitle ());
+            json.put("userId",testResult.getUserId());
+            json.put("userName",userMap.get(testResult.getUserId ()).getName());
+            json.put("score",testResult.getScore ());
+            testResultJsonList.add (json);
         }
-        model.addAttribute ("testResultList", Lists.newArrayList (testResultMap.values ()));
+        model.addAttribute ("testResultList", testResultJsonList);
         return "test_result_list";
     }
 }

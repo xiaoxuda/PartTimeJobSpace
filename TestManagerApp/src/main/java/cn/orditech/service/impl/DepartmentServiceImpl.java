@@ -1,6 +1,7 @@
 
 package cn.orditech.service.impl;
 
+import cn.orditech.dao.DepartmentDao;
 import cn.orditech.dao.impl.DepartmentDaoImpl;
 import cn.orditech.service.DepartmentService;
 import cn.orditech.dao.impl.BaseDao;
@@ -16,10 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class DepartmentServiceImpl extends BaseService<Department> implements DepartmentService{
     @Autowired
-    private DepartmentDaoImpl departmentDao;
+    private DepartmentDao departmentDao;
 
+    @Override
     protected BaseDao<Department> getDao(){
-        return this.departmentDao;
+        return (DepartmentDaoImpl)this.departmentDao;
     }
     
 }

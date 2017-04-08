@@ -46,4 +46,11 @@ public interface TestResultDao{
      * @return
      */
     List<TestResult> selectList(TestResult entity);
+
+    /**
+     * 批量查询跟定用户的考试结果
+     * @param userIds
+     * @return
+     */
+    List<TestResult> selectListByUserIds(List<Long> userIds);
 }

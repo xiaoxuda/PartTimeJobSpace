@@ -46,4 +46,32 @@ public interface UserDao{
      * @return
      */
     List<User> selectList(User entity);
+
+    /**
+     * 通过账号查询用户
+     * @param account
+     * @return
+     */
+    User  getUserByAccount(String account);
+
+    /**
+     * 通过账号密码查询用户
+     * @param account
+     * @param pswd
+     * @return
+     */
+    User getUserByAccountAndPassword(String account,String pswd);
+
+    /**
+     * 根据部门查询员工ID
+     * @param code
+     * @return
+     */
+    List<User> selectUserByDepartment(String code);
+
+    /**
+     * 返回所有用户ID
+     * @return
+     */
+    List<Long> selectAllUserIds();
 }

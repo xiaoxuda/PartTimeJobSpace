@@ -11,12 +11,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class LoginTicketDaoImpl extends BaseDao<LoginTicket> implements LoginTicketDao {
-    public LoginTicketDaoImpl() {
-        this.namespace="cn.orditech.dao.impl.LoginTicketDaoImpl";
-    }
 
     public LoginTicket getLoginTicketByTicket(String ticket){
-        return sqlSession.selectOne(this.namespace+".getLoginTicketByTicket", ticket);
+        return sqlSession.selectOne(getFullStatement("getLoginTicketByTicket"), ticket);
     }
 
 //    @Update()
@@ -24,6 +21,6 @@ public class LoginTicketDaoImpl extends BaseDao<LoginTicket> implements LoginTic
         LoginTicket loginTicket = new LoginTicket();
         loginTicket.setTicket(ticket);
         loginTicket.setStatus(status);
-        sqlSession.update(this.namespace+".updateTicketStatus" ,loginTicket);
+        sqlSession.update(getFullStatement("updateTicketStatus") ,loginTicket);
     }
 }

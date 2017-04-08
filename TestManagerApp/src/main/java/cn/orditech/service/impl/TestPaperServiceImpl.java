@@ -1,6 +1,7 @@
 
 package cn.orditech.service.impl;
 
+import cn.orditech.dao.TestPaperDao;
 import cn.orditech.dao.impl.TestPaperDaoImpl;
 import cn.orditech.service.TestPaperService;
 import cn.orditech.dao.impl.BaseDao;
@@ -18,10 +19,10 @@ import java.util.List;
 @Service
 public class TestPaperServiceImpl extends BaseService<TestPaper> implements TestPaperService{
     @Autowired
-    private TestPaperDaoImpl testPaperDao;
+    private TestPaperDao testPaperDao;
 
     protected BaseDao<TestPaper> getDao(){
-        return this.testPaperDao;
+        return (TestPaperDaoImpl)this.testPaperDao;
     }
 
     @Override

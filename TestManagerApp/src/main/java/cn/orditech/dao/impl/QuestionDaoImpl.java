@@ -18,14 +18,6 @@ import java.util.Map;
  */
 @Repository
 public class QuestionDaoImpl extends BaseDao<Question> implements QuestionDao {
-    public QuestionDaoImpl () {
-        this.namespace = "cn.orditech.dao.impl.QuestionDaoImpl";
-    }
-
-    @Override
-    public int delete (Long id) {
-        return getSqlSession ().update ("delete", id);
-    }
 
     @Override
     public List<Question> selectByIds (List<Long> ids) {
@@ -34,7 +26,7 @@ public class QuestionDaoImpl extends BaseDao<Question> implements QuestionDao {
         }
         Map<String, Object> param = Maps.newHashMap ();
         param.put ("ids", ids);
-        return getSqlSession ().selectList ("selectByIds", param);
+        return getSqlSession ().selectList (getFullStatement("selectByIds"), param);
     }
 
     @Override
@@ -52,6 +44,6 @@ public class QuestionDaoImpl extends BaseDao<Question> implements QuestionDao {
         param.put ("keyword",questionPageQuery.getKeyword ());
         param.put ("offset", (pageNum-1) * pageSize);
         param.put ("pageSize", pageSize);
-        return getSqlSession ().selectList ("pageQuery", param);
+        return getSqlSession ().selectList (getFullStatement("pageQuery"), param);
     }
 }

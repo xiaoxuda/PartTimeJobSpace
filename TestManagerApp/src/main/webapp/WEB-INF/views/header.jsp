@@ -120,7 +120,7 @@
     <div class="login-mark">
         <%if(logined){%>
         <a disabled="true"><%=user.getName ()%>,</a>
-        <a href="/logout.htm">注销</a>
+        <a href="/logout.htm">退出</a>
         <%}else{%>
         <a href="/register.htm">注册</a>
         <a href="/login.htm">登录</a>

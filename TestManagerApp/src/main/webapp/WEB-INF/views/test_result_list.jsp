@@ -14,15 +14,19 @@
 <%@ include file="header.jsp"%>
 <table class="table table-bordered table-hover table-condensed">
     <thead>
-        <td>ID</td>
+        <td>试卷ID</td>
         <td>试卷名称</td>
+        <td>用户ID</td>
+        <td>用户名称</td>
         <td>得分</td>
     </thead>
     <tbody>
     <%for(JSONObject json:testResultList){%>
         <tr>
-            <td><%=json.getLong("id")%></td>
+            <td><%=json.getLong("testId")%></td>
             <td><%=json.getString("title")%></td>
+            <td><%=json.getLong("userId")%></td>
+            <td><%=json.getString("userName")%></td>
             <td><%=json.getInteger ("score")%></td>
         </tr>
     <%}%>

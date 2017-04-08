@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version 1.0
  */
 public class BaseDao<T>{
-    protected String namespace;
 	@Autowired
     protected SqlSessionTemplate sqlSession;
     /**
@@ -34,7 +33,7 @@ public class BaseDao<T>{
      * @return 
      */
     public int insert(T entity){
-        return sqlSession.insert(this.namespace+".insert", entity);
+        return sqlSession.insert(getFullStatement("insert"), entity);
     };
     /**
      * 根据主键删除对应数据
@@ -42,7 +41,7 @@ public class BaseDao<T>{
      * @return
      */
     public int delete(Long id){
-        return sqlSession.delete(this.namespace+".delete", id);
+        return sqlSession.delete(getFullStatement("delete"), id);
     };
     /**
      * 根据主键更新对应数据条目
@@ -50,7 +49,7 @@ public class BaseDao<T>{
      * @return
      */
     public int update(T entity){
-        return sqlSession.update(this.namespace+".update", entity);
+        return sqlSession.update(getFullStatement("update"), entity);
     };
     /**
      * 根据主键更新对应数据条目，如果entity数据域为null则不更新对应数据域
@@ -58,7 +57,7 @@ public class BaseDao<T>{
      * @return
      */
     public int updateSelective(T entity){
-        return sqlSession.update(this.namespace+".updateSelective", entity);
+        return sqlSession.update(getFullStatement("updateSelective"), entity);
     };
     /**
      * 根据主键查询对应数据条目
@@ -66,7 +65,7 @@ public class BaseDao<T>{
      * @return
      */
     public T selectOne(Long id){
-        return sqlSession.selectOne(this.namespace+".selectOne", id);
+        return sqlSession.selectOne(getFullStatement("selectOne"), id);
     };
     /**
      * 根据查询条件返回相应数据条目，entity中值为null的数据域不作为查询条件
@@ -74,6 +73,15 @@ public class BaseDao<T>{
      * @return
      */
     public List<T> selectList(T entity){
-        return sqlSession.selectList(this.namespace+".selectList", entity);
+        return sqlSession.selectList(getFullStatement("selectList"), entity);
     };
+
+    /**
+     * 获取访问链接
+     * @param key
+     * @return
+     */
+    public String getFullStatement(String key){
+        return this.getClass ().getName ()+"."+key;
+    }
 }

@@ -37,37 +37,35 @@
         <td><%=department.getName()%></td>
         <td><%=authLevel.getDesc()%></td>
         <td data-uid="<%=userItem.getId()%>">
-            <a class="auth" id="confirm_auth" style="display: <%=(authLevel==AuthorizationTypeEnum.GENERAL_STAFF?"inline":"none")%>">设置主管</a>
-            <a class="auth" id="cancel_auth" style="display: <%=(authLevel==AuthorizationTypeEnum.MANAGER_STAFF?"inline":"none")%>">撤销主管</a>
+            <a class="auth confirm_auth" style="display: <%=(authLevel==AuthorizationTypeEnum.GENERAL_STAFF?"inline":"none")%>">设置主管</a>
+            <a class="auth cancel_auth" style="display: <%=(authLevel==AuthorizationTypeEnum.MANAGER_STAFF?"inline":"none")%>">撤销主管</a>
         </td>
     </tr>
     <%}%>
     </tbody>
 </table>
 <script>
-    $("#confirm_auth").click(function(e){
+    $(".confirm_auth").click(function(e){
         e.preventDefault();
         var suerId = $(this).parent("td:first").data("uid");
         $.post("confirmAuth.htm",{userId:suerId},function(result,sucess){
             var json = JSON.parse(result);
             if(json.success){
                 alert("设置成功");
-                $("#confirm_auth").hide();
-                $("#cancel_auth").show();
+                window.location.href=window.location.href;
             }else{
                 alert("设置失败，"+json.message);
             }
         });
     });
-    $("#cancel_auth").click(function(e){
+    $(".cancel_auth").click(function(e){
         e.preventDefault();
         var suerId = $(this).parent("td:first").data("uid");
         $.post("cancelAuth.htm",{userId:suerId},function(result,sucess){
             var json = JSON.parse(result);
             if(json.success){
                 alert("设置成功");
-                $("#cancel_auth").hide();
-                $("#confirm_auth").show();
+                window.location.href=window.location.href;
             }else{
                 alert("设置失败，"+json.message);
             }

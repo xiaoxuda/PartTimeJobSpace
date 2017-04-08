@@ -12,7 +12,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class DepartmentDaoImpl extends BaseDao<Department> implements DepartmentDao{
-    public DepartmentDaoImpl(){
-        this.namespace="cn.orditech.dao.impl.DepartmentDaoImpl";
-    }
 }
