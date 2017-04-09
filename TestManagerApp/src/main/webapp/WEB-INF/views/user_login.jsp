@@ -18,7 +18,7 @@
 <div class="login-form">
 <form class="form-horizontal">
     <div class="form-group">
-        <label class="control-label col-sm-3" for="userAccount">用户名:</label>
+        <label class="control-label col-sm-3" for="userAccount">工号:</label>
         <div class=" col-sm-9">
             <input id="userAccount" name="account" class="form-control" placeholder=""/>
         </div>

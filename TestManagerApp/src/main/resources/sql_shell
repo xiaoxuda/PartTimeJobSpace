@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2017-03-25 10:53:32
+Date: 2017-04-09 10:43:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,35 +26,96 @@ CREATE TABLE `department` (
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `部门编号` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of department
 -- ----------------------------
+INSERT INTO department VALUES ('1', '0814', '行政部', '2017-04-05 21:26:23', '2017-04-05 21:26:23');
+INSERT INTO department VALUES ('2', '0815', '财务部', '2017-04-05 21:26:23', '2017-04-05 21:26:23');
+INSERT INTO department VALUES ('3', '0816', '技术部', '2017-04-05 21:26:23', '2017-04-05 21:26:23');
+
+-- ----------------------------
+-- Table structure for `login_ticket`
+-- ----------------------------
+DROP TABLE IF EXISTS `login_ticket`;
+CREATE TABLE `login_ticket` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `ticket` varchar(255) NOT NULL COMMENT 'T票',
+  `status` int(8) NOT NULL COMMENT '状态（0：有效，1：无效）',
+  `expired` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'T票过期时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of login_ticket
+-- ----------------------------
+INSERT INTO login_ticket VALUES ('1', '1', 'a848eab8ed2d4fb98e49f83beb9cca43', '0', '2017-04-04 23:01:29');
+INSERT INTO login_ticket VALUES ('2', '2', '4cb80367c2e1411a90a18cb441977114', '0', '2017-04-04 23:44:14');
+INSERT INTO login_ticket VALUES ('3', '1', '138c0d0248004d5c87468a7e3a6c369b', '0', '2017-04-05 00:08:40');
+INSERT INTO login_ticket VALUES ('4', '1', 'd004dc7a4c9148f685216f4c8cf1284a', '0', '2017-04-05 00:11:25');
+INSERT INTO login_ticket VALUES ('5', '3', '7bdc9cf496744feb9325b983fae7e142', '0', '2017-04-07 23:10:18');
+INSERT INTO login_ticket VALUES ('6', '1', '8765ba1bc4704b4a880746e43e932e69', '0', '2017-04-07 23:10:35');
+INSERT INTO login_ticket VALUES ('7', '1', '714d34cc2df44e3da7eaa3062e2ebc3b', '1', '2017-04-07 23:38:53');
+INSERT INTO login_ticket VALUES ('8', '1', '1df0a96ca410473b9643df216396c9eb', '1', '2017-04-07 23:40:34');
+INSERT INTO login_ticket VALUES ('9', '2', '1930fb642b6843149eac1db5175661eb', '0', '2017-04-08 00:07:57');
+INSERT INTO login_ticket VALUES ('10', '1', '9b4be6bdf52f45cf844f76d3db6612d9', '1', '2017-04-08 00:08:42');
+INSERT INTO login_ticket VALUES ('11', '2', 'f75d20a751a94a518a7c5bc802b7b3a2', '0', '2017-04-08 00:12:23');
+INSERT INTO login_ticket VALUES ('12', '2', 'fca95e9771d74f79959783fc12f1da0d', '1', '2017-04-09 09:32:19');
+INSERT INTO login_ticket VALUES ('13', '1', 'e1cc737e632f40569d5508cf094781f2', '0', '2017-04-09 09:46:43');
+INSERT INTO login_ticket VALUES ('14', '2', 'ec53bd39d3af40c4a8f0990a48f32869', '0', '2017-04-09 09:50:22');
+INSERT INTO login_ticket VALUES ('15', '2', '8163c7b956ff4cbea61a2512a0d8ddf2', '0', '2017-04-09 09:58:28');
+INSERT INTO login_ticket VALUES ('16', '2', '9abcfa6646534939b7c9afe0b0aef0e0', '0', '2017-04-09 10:04:33');
+INSERT INTO login_ticket VALUES ('17', '2', 'd1a15c92418140f39024e63664175960', '0', '2017-04-09 10:12:30');
+INSERT INTO login_ticket VALUES ('18', '2', '87ca6d959f734c22ae9cc828e0f80ce9', '1', '2017-04-09 10:17:20');
+INSERT INTO login_ticket VALUES ('19', '1', 'c0a2d94ad6a74e63a75fe0cdffe5e71f', '0', '2017-04-09 10:50:53');
+INSERT INTO login_ticket VALUES ('20', '2', '8927f82789554431af2c36bed41ed0d1', '1', '2017-04-09 10:54:15');
+INSERT INTO login_ticket VALUES ('21', '1', 'f420b5c2d235476b9e69b85365ed6f7c', '0', '2017-04-09 10:54:30');
+INSERT INTO login_ticket VALUES ('22', '1', 'e215d13e617548d1925950c17e0b422e', '0', '2017-04-09 11:05:37');
+INSERT INTO login_ticket VALUES ('23', '1', '05f53e06708741ef8b6dfa1601b530ec', '1', '2017-04-09 11:15:05');
+INSERT INTO login_ticket VALUES ('24', '2', '6531731aa90d4eda82b62f8bec009dd1', '0', '2017-04-09 11:15:58');
+INSERT INTO login_ticket VALUES ('25', '1', 'ec46f7c8deea4c79a219f6cb934dcab9', '1', '2017-04-09 11:24:15');
+INSERT INTO login_ticket VALUES ('26', '2', '5d7f510785c240429b7475b72f673908', '0', '2017-04-09 11:24:36');
+INSERT INTO login_ticket VALUES ('27', '2', '91f77cdfa5424b189b87aeb1ab143dd9', '0', '2017-04-09 20:19:57');
+INSERT INTO login_ticket VALUES ('28', '2', '278f5d5d652644478f50a2ee79a0fa0d', '0', '2017-04-09 20:23:49');
+INSERT INTO login_ticket VALUES ('29', '2', '84084b1d6ce641fc9089ab6d222bdf9e', '0', '2017-04-09 20:54:13');
+INSERT INTO login_ticket VALUES ('30', '3', '73515182dbaf4113a8ea4cdac67d5910', '0', '2017-04-09 20:57:45');
+INSERT INTO login_ticket VALUES ('31', '3', '501eea843d7f4697aafb2034cd580bd4', '1', '2017-04-09 20:59:43');
+INSERT INTO login_ticket VALUES ('32', '1', '040fb72f8d1e41848eb0311a88961385', '1', '2017-04-09 21:00:51');
+INSERT INTO login_ticket VALUES ('33', '2', '7fb475be41f1480c96e072344762ffc9', '1', '2017-04-09 21:01:17');
+INSERT INTO login_ticket VALUES ('34', '3', 'f74e723c8c1d44a9a560b50c2fd31816', '0', '2017-04-09 21:01:49');
+INSERT INTO login_ticket VALUES ('35', '2', '8c8057e9393f437c96c3beaa6c3a584f', '0', '2017-04-09 21:05:38');
+INSERT INTO login_ticket VALUES ('36', '2', '34851aade5314904a50888de55dae32b', '0', '2017-04-09 21:08:35');
+INSERT INTO login_ticket VALUES ('37', '2', '5330deedd3934cabb7ebe672c90caec1', '0', '2017-04-10 10:37:50');
 
 -- ----------------------------
 -- Table structure for `question`
 -- ----------------------------
+DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `type` int(8) NOT NULL COMMENT '题型，(1:选择，2:判断)',
   `title` varchar(255) NOT NULL COMMENT '问题描述',
-  `options` varchar(1000) DEFAULT NULL COMMENT '答案集合，json结构，[{code:1,desc:''aaaa''},{code:2,desc:''aaaa''}]',
-  `answer` char(8) NOT NULL COMMENT '正确答案,对应options中的code',
+  `options` varchar(1000) DEFAULT NULL COMMENT '答案集合，json结构，[{mark:''A'',value:''aaaa''}]',
+  `answer` char(8) NOT NULL COMMENT '正确答案,对应options中的mark',
   `score` int(8) NOT NULL DEFAULT '0' COMMENT '默认分数',
   `deleted` bit(8) NOT NULL DEFAULT b'0' COMMENT '是否已删除，0：否，1：是',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of question
 -- ----------------------------
+INSERT INTO question VALUES ('15', '1', '你觉得北京怎么样？', '[{\"mark\":\"A\",\"value\":\"非常繁华，交通发达，经济繁荣\"},{\"mark\":\"B\",\"value\":\"有很多的工作机会\"},{\"mark\":\"C\",\"value\":\"污染严重\"},{\"mark\":\"D\",\"value\":\"人口密集\"}]', 'A', '2', '', '2017-04-09 10:40:49', '2017-04-09 10:40:49');
+INSERT INTO question VALUES ('16', '2', '昆明四季如春？', '[{\"mark\":\"R\",\"value\":\"正确\"},{\"mark\":\"W\",\"value\":\"错误\"}]', 'R', '2', '', '2017-04-09 10:41:53', '2017-04-09 10:41:53');
 
 -- ----------------------------
 -- Table structure for `test_paper`
 -- ----------------------------
+DROP TABLE IF EXISTS `test_paper`;
 CREATE TABLE `test_paper` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL COMMENT '试卷描述',
@@ -64,11 +125,12 @@ CREATE TABLE `test_paper` (
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of test_paper
 -- ----------------------------
+INSERT INTO test_paper VALUES ('3', '2017年第一次模拟考试', '[{\"id\":15,\"score\":\"2\"},{\"id\":16,\"score\":\"2\"}]', '4', '', '2017-04-09 10:42:23', '2017-04-09 10:42:23');
 
 -- ----------------------------
 -- Table structure for `test_result`
@@ -83,11 +145,12 @@ CREATE TABLE `test_result` (
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of test_result
 -- ----------------------------
+INSERT INTO test_result VALUES ('7', '2', '3', '[{\"id\":15,\"answer\":\"A\"},{\"id\":16,\"answer\":\"R\"}]', '4', '2017-04-09 10:42:50', '2017-04-09 10:42:50');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -96,29 +159,19 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `account` varchar(32) NOT NULL COMMENT '账号',
-  `password` varchar(16) NOT NULL COMMENT '密码',
+  `password` varchar(32) NOT NULL COMMENT '密码',
   `name` varchar(255) NOT NULL COMMENT '姓名',
   `sex` int(8) NOT NULL COMMENT '性别（1：男，2：女）',
   `department` varchar(32) NOT NULL COMMENT '所属部门编号',
   `type` int(8) NOT NULL DEFAULT '1' COMMENT '用户类型（1：普通用户，2：管理员）',
-  `level` int(8) NOT NULL DEFAULT '0' COMMENT '用户级别（0：普通，1：普通，2：主管，3：管理员）',
+  `level` int(8) NOT NULL DEFAULT '0' COMMENT '用户级别（1：普通，2：主管，3：管理员）',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `账号` (`account`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-
-
-DROP TABLE IF EXISTS `login_ticket`;
-CREATE TABLE `login_ticket` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-  `ticket` varchar(255) NOT NULL COMMENT 'T票',
-  `status` int(8) NOT NULL COMMENT '状态（0：有效，1：无效）',
-  `expired` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'T票过期时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO user VALUES ('2', 'admin', 'E10ADC3949BA59ABBE56E057F20F883E', '管理员', '2', '0815', '2', '3', '2017-04-05 21:29:06', '2017-04-08 21:02:43');

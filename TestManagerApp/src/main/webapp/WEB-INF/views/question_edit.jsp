@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="cn.orditech.entity.Question" %>
 <%@ page import="com.alibaba.fastjson.JSON" %>
+<%@ page import="cn.orditech.enums.QuestionTypeEnum" %>
 <%
     boolean isEdit = Boolean.TRUE.equals (request.getAttribute ("isEdit"));
     Question question = (Question)request.getAttribute ("question");
@@ -19,8 +20,8 @@
         <label for="questionType" class="control-label">试题类型</label>
         <select id="questionType" name="type" class="form-control">
             <option value="">选择类型</option>
-            <option value="1">选择题</option>
-            <option value="2">判断题</option>
+            <option value="<%=QuestionTypeEnum.SINGLE_SELECT.getType()%>">选择题</option>
+            <option value="<%=QuestionTypeEnum.JUDGE.getType()%>">判断题</option>
         </select>
     </div>
     <div class="form-group">
@@ -31,7 +32,7 @@
         <label for="questionScore" class="control-label">默认分数</label>
         <input type="number" id="questionScore" name="score" class="form-control"/>
     </div>
-    <div id="questiontype_1" class="question-type form-group" style="display:none;">
+    <div id="questiontype_<%=QuestionTypeEnum.SINGLE_SELECT.getType()%>" class="question-type form-group" style="display:none;">
         <label class="control-label">可选项(请选中正确答案)</label>
         <div class="input-group">
             <div class="input-group-addon">A</div>
@@ -62,7 +63,7 @@
             </div>
         </div>
     </div>
-    <div id="questiontype_2" class="question-type form-group" style="display:none;">
+    <div id="questiontype_<%=QuestionTypeEnum.JUDGE.getType()%>" class="question-type form-group" style="display:none;">
         <label class="control-label">可选项</label><br/>
         <label class="radio-inline">
             <input type="text" class="option" data-mark="R" style="display:none;" value="正确"/>
