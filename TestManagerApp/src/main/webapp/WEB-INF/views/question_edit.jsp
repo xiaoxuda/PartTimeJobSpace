@@ -20,7 +20,8 @@
         <label for="questionType" class="control-label">试题类型</label>
         <select id="questionType" name="type" class="form-control">
             <option value="">选择类型</option>
-            <option value="<%=QuestionTypeEnum.SINGLE_SELECT.getType()%>">选择题</option>
+            <option value="<%=QuestionTypeEnum.SINGLE_SELECT.getType()%>">单项选择题</option>
+            <option value="<%=QuestionTypeEnum.MULTI_SELECT.getType()%>">多项选择题</option>
             <option value="<%=QuestionTypeEnum.JUDGE.getType()%>">判断题</option>
         </select>
     </div>
@@ -60,6 +61,37 @@
             <input type="text" class="option form-control" data-mark="D" placeholder="请输入选项描述">
             <div class="input-group-addon">
                 <input type="radio" name="selectQuestionRadios" class="answer" value="D"/>
+            </div>
+        </div>
+    </div>
+    <div id="questiontype_<%=QuestionTypeEnum.MULTI_SELECT.getType()%>" class="question-type form-group" style="display:none;">
+        <label class="control-label">可选项(请选中正确答案,多选题)</label>
+        <div class="input-group">
+            <div class="input-group-addon">A</div>
+            <input type="text" class="option form-control" data-mark="A" placeholder="请输入选项描述">
+            <div class="input-group-addon">
+                <input type="checkbox" name="selectQuestionRadios" class="answer" value="A"/>
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="input-group-addon">B</div>
+            <input type="text" class="option form-control" data-mark="B" placeholder="请输入选项描述">
+            <div class="input-group-addon">
+                <input type="checkbox" name="selectQuestionRadios" class="answer" value="B"/>
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="input-group-addon">C</div>
+            <input type="text" class="option form-control" data-mark="C" placeholder="请输入选项描述">
+            <div class="input-group-addon">
+                <input type="checkbox" name="selectQuestionRadios" class="answer" value="C"/>
+            </div>
+        </div>
+        <div class="input-group">
+            <div class="input-group-addon">D</div>
+            <input type="text" class="option form-control" data-mark="D" placeholder="请输入选项描述">
+            <div class="input-group-addon">
+                <input type="checkbox" name="selectQuestionRadios" class="answer" value="D"/>
             </div>
         </div>
     </div>

@@ -22,7 +22,8 @@
     <td>性别</td>
     <td>所属部门</td>
     <td>职位</td>
-    <td></td>
+    <td>设置权限</td>
+    <td>删除用户</td>
     </thead>
     <tbody>
     <%
@@ -39,6 +40,9 @@
         <td data-uid="<%=userItem.getId()%>">
             <a class="auth confirm_auth" style="display: <%=(authLevel==AuthorizationTypeEnum.GENERAL_STAFF?"inline":"none")%>">设置主管</a>
             <a class="auth cancel_auth" style="display: <%=(authLevel==AuthorizationTypeEnum.MANAGER_STAFF?"inline":"none")%>">撤销主管</a>
+        </td>
+        <td data-uid="<%=userItem.getId()%>">
+            <a class="auth delete_user" style="display: <%=authLevel==AuthorizationTypeEnum.ADMINISTRATOR?"none":"inline"%>">删除用户</a>
         </td>
     </tr>
     <%}%>
@@ -68,6 +72,20 @@
                 window.location.href=window.location.href;
             }else{
                 alert("设置失败，"+json.message);
+            }
+        });
+    });
+
+    $(".delete_user").click(function(e){
+        e.preventDefault();
+        var suerId = $(this).parent("td:first").data("uid");
+        $.post("deleteUser.htm",{userId:suerId},function(result,sucess){
+            var json = JSON.parse(result);
+            if(json.success){
+                alert("删除成功");
+                window.location.href=window.location.href;
+            }else{
+                alert("删除失败，"+json.message);
             }
         });
     });
