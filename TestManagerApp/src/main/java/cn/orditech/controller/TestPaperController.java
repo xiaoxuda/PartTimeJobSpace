@@ -7,6 +7,7 @@ import cn.orditech.enums.AuthorizationTypeEnum;
 import cn.orditech.result.JsonResult;
 import cn.orditech.service.QuestionService;
 import cn.orditech.service.TestPaperService;
+import cn.orditech.tool.ReadWordDocUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
@@ -85,6 +86,34 @@ public class TestPaperController {
         List<TestPaper> testPaperList = testPaperService.selectList (new TestPaper ());
         model.addAttribute ("testPaperList",testPaperList);
 
+        return "test_paper_list";
+    }
+
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
+    @RequestMapping("/importTestPaper")
+    public String importTestPaper(Model model){
+        try {
+            List<String> rows = ReadWordDocUtils.getWordRows("F:/test2.doc");
+            testPaperService.analysisTestPaperAndSave(rows);
+            List<TestPaper> testPaperList = testPaperService.selectList (new TestPaper ());
+            model.addAttribute ("testPaperList",testPaperList);
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "test_paper_list";
+    }
+
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
+    @RequestMapping("/testPaperDelete")
+    public String testPaperDelete(@RequestParam(value = "id",required = false) Long id, Model model){
+        if(id==null){
+            return "test_paper_list";
+        }
+        testPaperService.delete(id);
+        List<TestPaper> testPaperList = testPaperService.selectList (new TestPaper ());
+        model.addAttribute ("testPaperList",testPaperList);
         return "test_paper_list";
     }
 

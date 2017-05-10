@@ -53,4 +53,10 @@ public interface TestPaperService{
      * @return
      */
     List<TestPaper> findByIds(List<Long> ids);
+
+    /**
+     * word类型的试卷导入
+     * @param rows
+     */
+    public void analysisTestPaperAndSave(List<String>rows);
 }

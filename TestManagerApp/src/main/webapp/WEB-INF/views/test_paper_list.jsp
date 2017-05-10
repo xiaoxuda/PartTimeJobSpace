@@ -30,6 +30,7 @@
             <td><%=testPaper.getScore()%></td>
             <td>
                 <%if(author){%><a href="testPaperEdit.htm?id=<%=testPaper.getId()%>">编辑&nbsp;&nbsp;</a><%}%>
+                <%--<%if(author){%><a href="testPaperDelete.htm?id=<%=testPaper.getId()%>">删除&nbsp;&nbsp;</a><%}%>--%>
                 <a href="/test/startTest.htm?id=<%=testPaper.getId()%>">开始测试</a>
             </td>
         </tr>
