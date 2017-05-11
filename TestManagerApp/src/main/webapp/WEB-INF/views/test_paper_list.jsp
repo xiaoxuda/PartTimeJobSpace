@@ -30,6 +30,7 @@
             <td><%=testPaper.getScore()%></td>
             <td>
                 <%if(author){%><a href="testPaperEdit.htm?id=<%=testPaper.getId()%>">编辑&nbsp;&nbsp;</a><%}%>
+                <%--<%if(author){%><a href="testPaperDelete.htm?id=<%=testPaper.getId()%>">删除&nbsp;&nbsp;</a><%}%>--%>
                 <a href="/test/startTest.htm?id=<%=testPaper.getId()%>">开始测试</a>
             </td>
         </tr>
@@ -38,9 +39,9 @@
 </table>
 <div>
     <form id="uploadForm" enctype="multipart/form-data" method="post" style="width:400px;display:inline;">
-        <input type="file" name="file" required />
+        <input type="file" name="file" style="display:inline;" required />
     </form>
-    <button id="upload">上传</button>
+    <button id="upload" class="btn">上传</button>
 </div>
 <script>
     var fileData = new FormData(document.getElementById("testFile"));

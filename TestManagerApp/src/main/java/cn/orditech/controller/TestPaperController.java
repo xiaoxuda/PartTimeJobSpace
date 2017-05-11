@@ -7,10 +7,12 @@ import cn.orditech.enums.AuthorizationTypeEnum;
 import cn.orditech.result.JsonResult;
 import cn.orditech.service.QuestionService;
 import cn.orditech.service.TestPaperService;
+import cn.orditech.tool.ReadWordDocUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -92,7 +96,33 @@ public class TestPaperController {
     @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
     @RequestMapping("/uploadTestPaper")
     @ResponseBody
-    public String uploadTestPaper(@RequestParam("file") MultipartFile file){
-        return JSONObject.toJSONString (JsonResult.successResult (null));
+    public String uploadTestPaper(@RequestParam("file") MultipartFile file,Model model){
+        try {
+            CommonsMultipartFile cf = (CommonsMultipartFile)file;
+            DiskFileItem fi = (DiskFileItem)cf.getFileItem();
+            File f = fi.getStoreLocation();
+            List<String> rows = ReadWordDocUtils.getWordRows(f);
+            testPaperService.analysisTestPaperAndSave(rows);
+            List<TestPaper> testPaperList = testPaperService.selectList (new TestPaper ());
+            model.addAttribute ("testPaperList",testPaperList);
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "test_paper_list";
     }
+
+    @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)
+    @RequestMapping("/testPaperDelete")
+    public String testPaperDelete(@RequestParam(value = "id",required = false) Long id, Model model){
+        if(id==null){
+            return "test_paper_list";
+        }
+        testPaperService.delete(id);
+        List<TestPaper> testPaperList = testPaperService.selectList (new TestPaper ());
+        model.addAttribute ("testPaperList",testPaperList);
+        return "test_paper_list";
+    }
+
 }
