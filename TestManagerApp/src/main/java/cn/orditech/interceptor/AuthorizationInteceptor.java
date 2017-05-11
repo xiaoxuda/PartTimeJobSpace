@@ -26,10 +26,7 @@ public class AuthorizationInteceptor extends HandlerInterceptorAdapter {
         } else {
             AuthorizationTypeEnum typeEnum = authorization.value ();
             User user = RequestLocal.get ().getUser ();
-            if (user.getLevel () >= typeEnum.getLevel ()) {
-                return true;
-            }
-            return false;
+            return user.getLevel () >= typeEnum.getLevel ();
         }
     }
 

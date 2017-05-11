@@ -36,5 +36,31 @@
     <%}%>
     </tbody>
 </table>
-
+<div>
+    <form id="uploadForm" enctype="multipart/form-data" method="post" style="width:400px;display:inline;">
+        <input type="file" name="file" required />
+    </form>
+    <button id="upload">上传</button>
+</div>
+<script>
+    var fileData = new FormData(document.getElementById("testFile"));
+    $("#upload").click(function(){
+        var formData = new FormData($( "#uploadForm" )[0]);
+        $.ajax({
+            url: '/testPaper/uploadTestPaper.htm' ,
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+                alert(returndata);
+            },
+            error: function (returndata) {
+                alert(returndata);
+            }
+        });
+    });
+</script>
 <%@ include file="tail.jsp"%>
