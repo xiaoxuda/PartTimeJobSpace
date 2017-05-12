@@ -57,6 +57,7 @@
             processData: false,
             success: function (returndata) {
                 alert(returndata);
+                window.location.href = "testPaperList.htm";
             },
             error: function (returndata) {
                 alert(returndata);

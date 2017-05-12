@@ -110,7 +110,7 @@ public class TestPaperController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "test_paper_list";
+        return "上传成功！";
     }
 
     @Authorization(AuthorizationTypeEnum.ADMINISTRATOR)

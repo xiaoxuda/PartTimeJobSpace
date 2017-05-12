@@ -44,28 +44,28 @@ public class TestPaperServiceImpl extends BaseService<TestPaper> implements Test
     @Override
     public void analysisTestPaperAndSave(List<String>rows){
         TestPaper testPaper = new TestPaper();
-        //µÚÒ»ĞĞÊÇÊÔ¾íµÄ±êÌâ
+        //ç¬¬ä¸€è¡Œæ˜¯è¯•å·çš„æ ‡é¢˜
         String title = rows.get(0);
         testPaper.setTitle(title);
 
-        int singleNum =0;//µ¥Ñ¡ÌâÊıÁ¿
-        int singleScore=0;//µ¥Ñ¡ÌâÃ¿ÌâµÄ·ÖÊı
-        int multipleNum=0;//¶àÑ¡ÌâÊıÁ¿
-        int multipleScore=0;//¶àÑ¡ÌâÃ¿ÌâµÄ·ÖÊı
-        int judgeNum=0;//ÅĞ¶ÏÌâÊıÁ¿
-        int judgeScore=0;//ÅĞ¶ÏÌâÃ¿ÌâµÄ·ÖÊı
-        /***********ÊÔ¾í»ù´¡Êı¾İ¸³Öµ*********************/
+        int singleNum =0;//å•é€‰é¢˜æ•°é‡
+        int singleScore=0;//å•é€‰é¢˜æ¯é¢˜çš„åˆ†æ•°
+        int multipleNum=0;//å¤šé€‰é¢˜æ•°é‡
+        int multipleScore=0;//å¤šé€‰é¢˜æ¯é¢˜çš„åˆ†æ•°
+        int judgeNum=0;//åˆ¤æ–­é¢˜æ•°é‡
+        int judgeScore=0;//åˆ¤æ–­é¢˜æ¯é¢˜çš„åˆ†æ•°
+        /***********è¯•å·åŸºç¡€æ•°æ®èµ‹å€¼*********************/
         for (int i = 0; i < rows.size(); i++) {
             String delHtml = rows.get(i);
-            if(delHtml.contains("¡¢µ¥Ñ¡Ìâ")){
+            if(delHtml.contains("ã€å•é€‰é¢˜")){
                 String numScore= ReadWordDocUtils.numScore(delHtml);
                 singleNum= Integer.parseInt(numScore.split(",")[0]) ;
                 singleScore=Integer.parseInt(numScore.split(",")[1]) ;
-            }else if(delHtml.contains("¡¢¶àÑ¡Ìâ")){
+            }else if(delHtml.contains("ã€å¤šé€‰é¢˜")){
                 String numScore=ReadWordDocUtils.numScore(delHtml);
                 multipleNum= Integer.parseInt(numScore.split(",")[0]) ;
                 multipleScore=Integer.parseInt(numScore.split(",")[1]) ;
-            }else if(delHtml.contains("¡¢ÅĞ¶ÏÌâ")){
+            }else if(delHtml.contains("ã€åˆ¤æ–­é¢˜")){
                 String numScore=ReadWordDocUtils.numScore(delHtml);
                 judgeNum= Integer.parseInt(numScore.split(",")[0]) ;
                 judgeScore=Integer.parseInt(numScore.split(",")[1]) ;
@@ -77,7 +77,7 @@ public class TestPaperServiceImpl extends BaseService<TestPaper> implements Test
         int counter = 0;
         int i=1;
         while(i < rows.size()){
-            if(rows.get(i).contains("¡¢ÅĞ¶ÏÌâ") || counter < judgeNum){//¿ªÊ¼´¦ÀíÅĞ¶ÏÌâ£¬ÈËÎª¹æ¶¨wordÎÄµµÖĞÒ»µÀÅĞ¶ÏÌâÕ¼4ĞĞ
+            if(rows.get(i).contains("ã€åˆ¤æ–­é¢˜") || counter < judgeNum){//å¼€å§‹å¤„ç†åˆ¤æ–­é¢˜ï¼Œäººä¸ºè§„å®šwordæ–‡æ¡£ä¸­ä¸€é“åˆ¤æ–­é¢˜å 4è¡Œ
                 while (rows.get(i)==""){
                     i++;
                 }
@@ -91,25 +91,25 @@ public class TestPaperServiceImpl extends BaseService<TestPaper> implements Test
                 String option2 = rows.get(i++);
                 String rightAnser = rows.get(i++);
 
-                //±£´æÊÔÌâ
+                //ä¿å­˜è¯•é¢˜
                 Question question = new Question();
                 question.setGmtCreate(new Date());
                 question.setGmtModified(new Date());
                 question.setType(QuestionTypeEnum.JUDGE.getType());
-                question.setTitle(smallTitle.split("¡¢")[1]);
+                question.setTitle(smallTitle.split("ã€")[1]);
                 question.setScore(judgeScore);
-                question.setAnswer(rightAnser.split(":|£º")[1].equals("ÕıÈ·")?"R":"W");
+                question.setAnswer(rightAnser.split(":|ï¼š")[1].equals("æ­£ç¡®")?"R":"W");
 
                 JSONArray judgeOptionArray = new JSONArray();
                 jsonObject = new JSONObject();
                 jsonObject.put("mark","R");
-                jsonObject.put("value","ÕıÈ·");
+                jsonObject.put("value","æ­£ç¡®");
                 judgeOptionArray.add(jsonObject);
                 jsonObject = new JSONObject();
                 jsonObject.put("mark","W");
-                jsonObject.put("value","´íÎó");
+                jsonObject.put("value","é”™è¯¯");
                 judgeOptionArray.add(jsonObject);
-                question.setOptions(judgeOptionArray.toJSONString());//ÅĞ¶ÏÌâµÄÑ¡ÏîÊÇ¹Ì¶¨µÄ£¬Òò´ËĞ´ËÀÁË
+                question.setOptions(judgeOptionArray.toJSONString());//åˆ¤æ–­é¢˜çš„é€‰é¡¹æ˜¯å›ºå®šçš„ï¼Œå› æ­¤å†™æ­»äº†
 
                 questionService.insert(question);
 
@@ -119,7 +119,7 @@ public class TestPaperServiceImpl extends BaseService<TestPaper> implements Test
                 questionJsonArray.add(jsonObject);
 
                 counter++;
-            }else if (rows.get(i).contains("¡¢µ¥Ñ¡Ìâ") || (counter-judgeNum) < singleNum){
+            }else if (rows.get(i).contains("ã€å•é€‰é¢˜") || (counter-judgeNum) < singleNum){
                 while (rows.get(i)==""){
                     i++;
                 }
@@ -128,7 +128,7 @@ public class TestPaperServiceImpl extends BaseService<TestPaper> implements Test
                 }
 
                 String smallTitle = rows.get(i++);
-                smallTitle = smallTitle.split("¡¢")[1];
+                smallTitle = smallTitle.split("ã€")[1];
                 String optionA = rows.get(i++);
                 optionA = optionA.split("\\.")[1];
                 String optionB = rows.get(i++);
@@ -138,9 +138,9 @@ public class TestPaperServiceImpl extends BaseService<TestPaper> implements Test
                 String optionD = rows.get(i++);
                 optionD = optionD.split("\\.")[1];
                 String rightAnswer =  rows.get(i++);
-                rightAnswer = rightAnswer.split(":|£º")[1];
+                rightAnswer = rightAnswer.split(":|ï¼š")[1];
 
-                //¹¹Ôìµ¥Ñ¡ÌâÑ¡Ïî¶ÔÓ¦µÄ JSON´®
+                //æ„é€ å•é€‰é¢˜é€‰é¡¹å¯¹åº”çš„ JSONä¸²
                 JSONArray singleSelectOptionArray = new JSONArray();
                 char c = 'A';
                 for(int j=0;j < 4;j++){
@@ -185,7 +185,7 @@ public class TestPaperServiceImpl extends BaseService<TestPaper> implements Test
 
                 questionJsonArray.add(jsonObject);
                 counter++;
-            }else if(rows.get(i).contains("¡¢¶àÑ¡Ìâ") || (counter-judgeNum-singleNum) < multipleNum){
+            }else if(rows.get(i).contains("ã€å¤šé€‰é¢˜") || (counter-judgeNum-singleNum) < multipleNum){
                 while (rows.get(i)==""){
                     i++;
                 }
@@ -194,7 +194,7 @@ public class TestPaperServiceImpl extends BaseService<TestPaper> implements Test
                 }
 
                 String smallTitle = rows.get(i++);
-                smallTitle = smallTitle.split("¡¢")[1];
+                smallTitle = smallTitle.split("ã€")[1];
                 String optionA = rows.get(i++);
                 optionA = optionA.split("\\.")[1];
                 String optionB = rows.get(i++);
@@ -204,9 +204,9 @@ public class TestPaperServiceImpl extends BaseService<TestPaper> implements Test
                 String optionD = rows.get(i++);
                 optionD = optionD.split("\\.")[1];
                 String rightAnswer =  rows.get(i++);
-                rightAnswer = rightAnswer.split(":|£º")[1];
+                rightAnswer = rightAnswer.split(":|ï¼š")[1];
 
-                //¹¹Ôì¶àÑ¡ÌâÑ¡Ïî¶ÔÓ¦µÄ JSON´®
+                //æ„é€ å¤šé€‰é¢˜é€‰é¡¹å¯¹åº”çš„ JSONä¸²
                 JSONArray multiSelectOptionJsonArray = new JSONArray();
                 char c = 'A';
                 for(int j=0;j < 4;j++){
