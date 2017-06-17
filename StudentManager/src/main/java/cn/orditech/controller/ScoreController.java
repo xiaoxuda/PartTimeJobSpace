@@ -2,6 +2,7 @@ package cn.orditech.controller;
 
 import cn.orditech.entity.Course;
 import cn.orditech.entity.Score;
+import cn.orditech.entity.Student;
 import cn.orditech.result.JsonResult;
 import cn.orditech.service.CourseService;
 import cn.orditech.service.ScoreService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +57,9 @@ public class ScoreController {
     }
 
     @RequestMapping("/curve")
-    public String scoreCurveIndex(){
+    public String scoreCurveIndex(@RequestParam("studentId") long id, Model model){
+        model.addAttribute ("courses", courceService.selectList (new Course ()));
+        model.addAttribute ("student",studentService.selectOne (id));
         return "score_curve";
     }
 }

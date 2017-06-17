@@ -23,7 +23,7 @@
     <td>考试时间</td>
     <td>得分</td>
     <td>操作&nbsp;&nbsp;&nbsp;&nbsp;<a id="addScore">录入成绩</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;<a href="/student/list.htm">返回学员列表</a></td>
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="/school/student/list.htm">返回学员列表</a></td>
     </thead>
     <tbody id="scoresTable">
 
@@ -40,6 +40,7 @@
             <div class="modal-body">
                 <form class="form-horizontal">
                     <input id="studentId" name="studentId" class="form-control" style="display:none" value="" />
+                    <input id="scoreId" name="scoreId" class="form-control" style="display:none" value="" />
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="courses4Save">科目:</label>
                         <div class=" col-sm-9">
@@ -54,13 +55,13 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="testDate">考试时间:</label>
                         <div class=" col-sm-9">
-                            <input id="testDate" name="testDate" class="form-control" data-date-format="yyyy-mm-dd" placeholder=""/>
+                            <input id="testDate" name="testDate" class="form-control" readonly />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="score">成绩:</label>
                         <div class=" col-sm-9">
-                            <input id="score" name="score" class="form-control" placeholder=""/>
+                            <input id="score" name="score" type="number" class="form-control" placeholder=""/>
                         </div>
                     </div>
                 </form>
@@ -84,7 +85,7 @@
     var scores=[];
 
     function getScores(){
-        $.post("/score/getScores.htm",
+        $.post("getScores.htm",
                 {studentId:student.id},
                 function(data,textStatus){
                     var json = JSON.parse(data);
@@ -119,11 +120,13 @@
         });
     }
     function cleanModal(){
-        $("#courses4Save option:first").click();
+        $("#scoreId").val("");
+        $("#courses4Save").val("");
         $("#score").val("");
         $("#testDate").val("");
     }
     function initModal(score){
+        $("#scoreId").val(score.id);
         var option = $("#courses4Save option[value="+score.course+"]");
         $("#courses4Save").val($(option).attr("value"));
         $("#score").val(score.score);
@@ -145,7 +148,7 @@
 
         var testDate=$("#testDate").val();
         if(testDate.length==0){
-            alert("请输入成绩");
+            alert("请选择考试时间");
             return;
         }
 
@@ -156,6 +159,7 @@
         }
 
         var score = {};
+        score.id=$("#scoreId").val();
         score.studentId=student.id;
         score.orgId=student.orgId;
         score.course=$(courseEle).attr("value");
@@ -165,13 +169,22 @@
     }
     $("#modalSaveBtn").click(function(e){
         var score=validateScore();
-        $.post("/score/save.htm",score,function(data,textStatus){
+        $.post("save.htm",score,function(data,textStatus){
             $("#editModal").modal('hide');
             var json = JSON.parse(data);
             if(json.success){
                 getScores();
             }
         });
+    });
+
+    $("#testDate").datetimepicker({
+        language:'zh-CN',
+        format: 'yyyy-mm-dd',
+        startView:2,
+        minView:2,
+        autoclose:true,
+        todayHighlight:true
     });
 
     getScores();

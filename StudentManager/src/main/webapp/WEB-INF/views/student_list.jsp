@@ -78,7 +78,7 @@
     var students=[];
 
     function getStudents(){
-        $.post("/student/getStudents.htm",
+        $.post("getStudents.htm",
                 {},
                 function(data,textStatus){
                     var json = JSON.parse(data);
@@ -99,7 +99,8 @@
                     "<td>"+sexMap[student.sex]+"</td>"+
                     "<td>"+student.school+"</td>"+
                     "<td><a class='studentEdit' data-index='"+i+"'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                    "<a class='scoreCurve' href='/score/list.htm?studentId="+student.id+"'>查看成绩</a></td>"+
+                    "<a class='scoreCurve' href='/school/score/list.htm?studentId="+student.id+"'>成绩</a>&nbsp;&nbsp;&nbsp;&nbsp;"+
+                    "<a class='scoreCurve' href='/school/score/curve.htm?studentId="+student.id+"'>成绩曲线</a></td>"+
                     "</tr>";
         }
         $("#studentsTable").html(tbody);
@@ -173,13 +174,22 @@
     }
     $("#modalSaveBtn").click(function(e){
         var student=validateStudent();
-        $.post("/student/save.htm",student,function(data,textStatus){
+        $.post("save.htm",student,function(data,textStatus){
             $("#editModal").modal('hide');
             var json = JSON.parse(data);
             if(json.success){
                 getStudents();
             }
         });
+    });
+
+    $("#testDate").datetimepicker({
+        language:'zh-CN',
+        format: 'yyyy-mm-dd',
+        startView:2,
+        minView:2,
+        autoclose:true,
+        todayHighlight:true
     });
 
     getStudents();
