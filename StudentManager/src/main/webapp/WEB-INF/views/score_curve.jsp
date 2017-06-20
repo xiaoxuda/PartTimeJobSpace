@@ -173,11 +173,11 @@
         $('#' + container).show();
     }
 
-    $("#courses4Select option").click(function(e){
-        var course = $(this).attr("value");
+    $("#courses4Select").change(function(){
+        var course = $("#courses4Select option:selected").attr("value");
         ajaxGetCurveData(course);
     });
 
-    $("#courses4Select option:first").click();
+    ajaxGetCurveData(<%=courses.get(0).getId()%>);
 </script>
 <%@include file="tail.jsp"%>
