@@ -99,8 +99,9 @@
                     "<td>"+sexMap[student.sex]+"</td>"+
                     "<td>"+student.school+"</td>"+
                     "<td><a class='studentEdit' data-index='"+i+"'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                    "<a class='scoreCurve' href='/school/score/list.htm?studentId="+student.id+"'>成绩</a>&nbsp;&nbsp;&nbsp;&nbsp;"+
-                    "<a class='scoreCurve' href='/school/score/curve.htm?studentId="+student.id+"'>成绩曲线</a></td>"+
+                    "<a class='studentDelete' data-index='"+i+"'>删除</a>&nbsp;&nbsp;&nbsp;&nbsp;"+
+                    "<a href='../score/list.htm?studentId="+student.id+"'>成绩</a>&nbsp;&nbsp;&nbsp;&nbsp;"+
+                    "<a href='../score/curve.htm?studentId="+student.id+"'>成绩曲线</a></td>"+
                     "</tr>";
         }
         $("#studentsTable").html(tbody);
@@ -113,6 +114,23 @@
             cleanModal();
             initModal(student);
             $("#editModal").modal('show');
+        });
+        $(".studentDelete").click(function(e){
+            e.preventDefault();
+            var student = students[$(this).data("index")];
+            if(!confirm("确实要删除"+student.name+"(ID="+student.id+")的所有信息吗？")){
+                return;
+            }
+            $.post(
+                "delete.htm",
+                {studentId:student.id},
+                function(data,textStatus){
+                    var json = JSON.parse(data);
+                    if(json.success){
+                        getStudents();
+                    }
+                }
+            );
         });
     }
     function cleanModal(){

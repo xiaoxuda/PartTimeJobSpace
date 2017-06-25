@@ -23,7 +23,7 @@
     <td>考试时间</td>
     <td>得分</td>
     <td>操作&nbsp;&nbsp;&nbsp;&nbsp;<a id="addScore">录入成绩</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;<a href="/school/student/list.htm">返回学员列表</a></td>
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="../student/list.htm">返回学员列表</a></td>
     </thead>
     <tbody id="scoresTable">
 
@@ -105,7 +105,9 @@
                     "<td>"+coursesMap[score.course]+"</td>"+
                     "<td>"+score.testDate+"</td>"+
                     "<td>"+score.score+"</td>"+
-                    "<td><a class='scoreEdit' data-index='"+i+"'>编辑</a></tr>";
+                    "<td><a class='scoreEdit' data-index='"+i+"'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+                    "<a class='scoreDelete' data-index='"+i+"'>删除</a>"+
+                    "</tr>";
         }
         $("#scoresTable").html(tbody);
         bindItemEvents();
@@ -117,6 +119,23 @@
             cleanModal();
             initModal(score);
             $("#editModal").modal('show');
+        });
+        $(".scoreDelete").click(function(e){
+            e.preventDefault();
+            var score = scores[$(this).data("index")];
+            if(!confirm("确实要删除这条"+coursesMap[score.course]+"成绩吗？")){
+                return;
+            }
+            $.post(
+                "delete.htm",
+                {id:score.id},
+                function(data,textStatus){
+                    var json = JSON.parse(data);
+                    if(json.success){
+                        getScores();
+                    }
+                }
+            );
         });
     }
     function cleanModal(){

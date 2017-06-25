@@ -56,6 +56,13 @@ public class ScoreController {
         return JsonResult.successResult (true).toString ();
     }
 
+    @RequestMapping("/delete")
+    @ResponseBody
+    public String delete(@RequestParam("id") long id){
+        scoreService.delete (id);
+        return JsonResult.successResult (true).toString ();
+    }
+
     @RequestMapping("/curve")
     public String scoreCurveIndex(@RequestParam("studentId") long id, Model model){
         model.addAttribute ("courses", courceService.selectList (new Course ()));

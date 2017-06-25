@@ -12,4 +12,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ScoreDaoImpl extends BaseDao<Score> implements ScoreDao{
+    @Override
+    public void deleteByStudentId (long studentId) {
+        getSqlSession ().delete ("deleteByStudentId", studentId);
+    }
 }

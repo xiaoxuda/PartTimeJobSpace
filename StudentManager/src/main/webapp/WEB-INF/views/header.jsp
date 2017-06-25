@@ -54,7 +54,7 @@
             position: relative;
             width: 100%;
             height: 150px;
-            background-image: url("/school/img/top_img.jpg");
+            background-image: url("../img/top_img.jpg");
         }
         .nav{
             width: 85%;

@@ -2,11 +2,13 @@ package cn.orditech.controller;
 
 import cn.orditech.entity.Student;
 import cn.orditech.result.JsonResult;
+import cn.orditech.service.ScoreService;
 import cn.orditech.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,8 @@ import java.util.List;
 public class StudentController {
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private ScoreService scoreService;
 
     @RequestMapping("/list")
     public String list(HttpServletRequest request, Model model){
@@ -42,6 +46,14 @@ public class StudentController {
         }else{
             studentService.insert (student);
         }
+        return JsonResult.successResult (true).toString ();
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public String delete(@RequestParam("studentId") long studentId){
+        studentService.delete (studentId);
+        scoreService.deleteByStudentId (studentId);
         return JsonResult.successResult (true).toString ();
     }
 

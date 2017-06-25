@@ -49,7 +49,7 @@
     </style>
 
 <div id="info"><p>编号：<%=student.getId()%>&nbsp;&nbsp;&nbsp;&nbsp;姓名：<%=student.getName()%></p></div>
-<div id="returnLink"><a href="/school/student/list.htm">返回学员列表</a></div>
+<div id="returnLink"><a href="../student/list.htm">返回学员列表</a></div>
 <div id="course_select" class="input-group">
     <div class="input-group" style="width:420px;">
         <span class="input-group-addon">请选择科目</span>

@@ -46,4 +46,10 @@ public interface ScoreDao{
      * @return
      */
     List<Score> selectList (Score entity);
+
+    /**
+     * 删除学生的所有成绩
+     * @param studentId
+     */
+    void deleteByStudentId(long studentId);
 }

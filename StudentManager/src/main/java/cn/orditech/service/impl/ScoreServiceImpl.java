@@ -22,5 +22,9 @@ public class ScoreServiceImpl extends BaseService<Score> implements ScoreService
     protected BaseDao<Score> getDao(){
         return (ScoreDaoImpl)this.scoreDao;
     }
-    
+
+    @Override
+    public void deleteByStudentId (long studentId) {
+        scoreDao.deleteByStudentId (studentId);
+    }
 }

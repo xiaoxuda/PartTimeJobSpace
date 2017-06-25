@@ -101,6 +101,11 @@
     </select>
     <!--base operation end-->
 
+    <delete id="deleteByStudentId" parameterType="java.lang.Long">
+        DELETE FROM score WHERE student_id = #{studentId}
+    </delete>
+
+
     <!--customize operation start-->
 </mapper>
 
