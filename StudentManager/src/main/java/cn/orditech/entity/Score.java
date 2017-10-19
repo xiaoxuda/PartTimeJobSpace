@@ -27,6 +27,18 @@ public class Score implements BaseEntity {
      * 得分 
      **/
     private Integer score;
+    /**
+     * 本次测试满分
+     **/
+    private Integer perfectScore;
+    /**
+     * 班级名次
+     **/
+    private Integer rankClass;
+    /**
+     * 学校名次
+     **/
+    private java.lang.Integer rankSchool;
     /** 
      * 测试时间 
      **/
@@ -73,6 +85,30 @@ public class Score implements BaseEntity {
     }
     public Integer getScore() {
         return this.score;
+    }
+
+    public Integer getPerfectScore () {
+        return perfectScore;
+    }
+
+    public void setPerfectScore (Integer perfectScore) {
+        this.perfectScore = perfectScore;
+    }
+
+    public Integer getRankClass () {
+        return rankClass;
+    }
+
+    public void setRankClass (Integer rankClass) {
+        this.rankClass = rankClass;
+    }
+
+    public Integer getRankSchool () {
+        return rankSchool;
+    }
+
+    public void setRankSchool (Integer rankSchool) {
+        this.rankSchool = rankSchool;
     }
 
     public String getTestDate () {

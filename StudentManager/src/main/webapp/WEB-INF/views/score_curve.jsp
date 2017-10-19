@@ -63,13 +63,14 @@
 <div id="score_chart" class="chart_container"></div>
 
 <script type="text/javascript">
+
     var studentId=<%=student.getId()%>;
 
     //保存由服务器获取的数据
     var srcData = {};
 
     /**
-     * 获取经营数据
+     * 获取成绩数据
      * @param course 课程代码
      */
     function ajaxGetCurveData(course) {
@@ -91,20 +92,20 @@
      * 将原始数据提取到需要展示的数组中
      * @param src 原始数据
      * @param xData 接受运算结果，做为x轴的值
-     * @param xDatas 接受运算结果，做为折线的值
-     * @param divisor 单位转换除数
+     * @param yData 接受运算结果，做为折线的值
+     * @param diviysor 单位转换除数
      */
-    function extraData(src, xData, sData, divisor) {
+    function extraData(src, xData, yData, xMap, divisor) {
         //提取年份，并默认升序排序
-        var tmt = {};
         for (var i=0;i<src.length;i++) {
             xData[i] = src[i].testDate;
-            tmt[xData[i]] = src[i].score;
+            xMap[xData[i]] = src[i];
         }
         xData.sort();
 
         for (var i = 0; i < xData.length; i++) {
-            sData[i] = tmt[xData[i]];
+            yData[i] = xMap[xData[i]].score;
+            yData[i] = Math.ceil(yData[i]*100/xMap[xData[i]].perfectScore);
         }
     }
 
@@ -117,7 +118,8 @@
     function generateBusinessChart(container, text, srcData, divisor) {
         var xData = [];
         var sDatas = [];
-        extraData(srcData, xData, sDatas, divisor);
+        var xMap = {};
+        extraData(srcData, xData, sDatas, xMap, divisor);
 
         var myChart = echarts.init(document.getElementById(container));
 
@@ -126,10 +128,15 @@
                 text: text
             },
             tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data: ['一季度', '二季度', '三季度', '四季度']
+                trigger: 'axis',
+                formatter: function (params) {
+                    var score = xMap[params[0].name];
+                    return '考试时间:' + score.testDate + '<br />' +
+                            '成绩:' + score.score + '<br />' +
+                            '满分:' + score.perfectScore + '<br />' +
+                            '班级排名:' + undefined2Str(score.rankClass) + '<br />' +
+                            '学校排名:' + undefined2Str(score.rankSchool);
+                }
             },
             toolbox: {
                 feature: {

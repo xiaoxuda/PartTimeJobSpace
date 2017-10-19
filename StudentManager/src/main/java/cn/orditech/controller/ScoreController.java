@@ -48,6 +48,9 @@ public class ScoreController {
     @RequestMapping("/save")
     @ResponseBody
     public String save(HttpServletRequest request, Score score){
+        if(score.getPerfectScore () == null){
+            score.setPerfectScore (100);
+        }
         if(score.getId () != null){
             scoreService.updateById (score);
         }else{

@@ -45,6 +45,8 @@
         }(jQuery));
     </script>
 
+    <script src="../js/orditech_common.js"></script>
+
     <style>
         body{
             padding-left:10%;

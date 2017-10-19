@@ -22,6 +22,9 @@
     <td>科目</td>
     <td>考试时间</td>
     <td>得分</td>
+    <td>满分</td>
+    <td>班级排名</td>
+    <td>学校排名</td>
     <td>操作&nbsp;&nbsp;&nbsp;&nbsp;<a id="addScore">录入成绩</a>
         &nbsp;&nbsp;&nbsp;&nbsp;<a href="../student/list.htm">返回学员列表</a></td>
     </thead>
@@ -64,6 +67,24 @@
                             <input id="score" name="score" type="number" class="form-control" placeholder=""/>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="perfectScore">总分:</label>
+                        <div class=" col-sm-9">
+                            <input id="perfectScore" name="perfectScore" type="number" class="form-control" placeholder="默认100"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="rankClass">班级排名:</label>
+                        <div class=" col-sm-9">
+                            <input id="rankClass" name="rankClass" type="number" class="form-control" placeholder=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="rankSchool">学校排名:</label>
+                        <div class=" col-sm-9">
+                            <input id="rankSchool" name="score" type="rankSchool" class="form-control" placeholder=""/>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -75,6 +96,7 @@
 </div><!-- /.modal -->
 
 <script>
+
     var student = <%=JSON.toJSONString (student)%>;
 
     var coursesMap={};
@@ -105,6 +127,9 @@
                     "<td>"+coursesMap[score.course]+"</td>"+
                     "<td>"+score.testDate+"</td>"+
                     "<td>"+score.score+"</td>"+
+                    "<td>"+score.perfectScore+"</td>"+
+                    "<td>"+undefined2Str(score.rankClass)+"</td>"+
+                    "<td>"+undefined2Str(score.rankSchool)+"</td>"+
                     "<td><a class='scoreEdit' data-index='"+i+"'>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
                     "<a class='scoreDelete' data-index='"+i+"'>删除</a>"+
                     "</tr>";
@@ -143,6 +168,9 @@
         $("#courses4Save").val("");
         $("#score").val("");
         $("#testDate").val("");
+        $("#perfectScore").val("");
+        $("#rankClass").val("");
+        $("#rankSchool").val("");
     }
     function initModal(score){
         $("#scoreId").val(score.id);
@@ -150,6 +178,9 @@
         $("#courses4Save").val($(option).attr("value"));
         $("#score").val(score.score);
         $("#testDate").val(score.testDate);
+        $("#perfectScore").val(score.perfectScore);
+        $("#rankClass").val(undefined2Str(score.rankClass));
+        $("#rankSchool").val(undefined2Str(score.rankSchool));
     }
 
     $("#addScore").click(function(e){
@@ -184,6 +215,9 @@
         score.course=$(courseEle).attr("value");
         score.testDate=testDate;
         score.score=scores;
+        score.perfectScore = $("#perfectScore").val();
+        score.rankClass = $("#rankClass").val();
+        score.rankSchool = $("#rankSchool").val();
         return score;
     }
     $("#modalSaveBtn").click(function(e){
