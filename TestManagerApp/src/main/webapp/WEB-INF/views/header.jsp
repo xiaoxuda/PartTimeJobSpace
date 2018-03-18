@@ -97,6 +97,9 @@
         <li role="presentation">
             <a href="/test/testResultList.htm" data-level="<%=AuthorizationTypeEnum.GENERAL_STAFF.getLevel()%>">考试成绩</a>
         </li>
+        <li>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p id="divtime"></p>
+        </li>
     </ul>
     <script>
         <%if(logined){%>

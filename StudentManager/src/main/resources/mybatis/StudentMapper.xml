@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据库基本操作 -->
+<mapper namespace="cn.orditech.dao.impl.StudentDaoImpl">
+    <sql id="columnMap">
+            id as id,
+            name as name,
+            sex as sex,
+            school as school,
+            birth as birth,
+            org_id as orgId,
+            referrer as referrer,
+            gmt_create as gmtCreate,
+            gmt_modified as gmtModified
+    </sql>
+    <!--base operation start-->
+    <insert id="insert" parameterType="cn.orditech.entity.Student" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO `student` (
+            id ,
+            name ,
+            sex ,
+            school ,
+            birth ,
+            org_id ,
+            referrer ,
+            gmt_create ,
+            gmt_modified 
+        ) VALUES (
+            #{id} ,
+            #{name} ,
+            #{sex} ,
+            #{school} ,
+            #{birth} ,
+            #{orgId} ,
+            #{referrer} ,
+            #{gmtCreate} ,
+            #{gmtModified} 
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM `student`
+        WHERE
+            id = #{id} 
+    </delete>
+    
+    <update id="updateById" parameterType="cn.orditech.entity.Student">
+        UPDATE `student` 
+        SET
+            name = #{name} ,
+            sex = #{sex} ,
+            school = #{school} ,
+            birth = #{birth} ,
+            org_id = #{orgId} ,
+            referrer = #{referrer} ,
+            gmt_create = #{gmtCreate} ,
+            gmt_modified = #{gmtModified} 
+        WHERE
+            id = #{id} 
+    </update>
+    
+    <update id="updateSelectiveById" parameterType="cn.orditech.entity.Student">
+        UPDATE `student`
+        SET
+            id = #{id} 
+            <if test="name!=null" >,name = #{name}</if>
+            <if test="sex!=null" >,sex = #{sex}</if>
+            <if test="school!=null" >,school = #{school}</if>
+            <if test="birth!=null" >,birth = #{birth}</if>
+            <if test="orgId!=null" >,org_id = #{orgId}</if>
+            <if test="referrer!=null" >,referrer = #{referrer}</if>
+            <if test="gmtCreate!=null" >,gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" >,gmt_modified = #{gmtModified}</if>
+        WHERE 
+            id = #{id} 
+    </update>
+    
+    <select id="selectOne" resultType="cn.orditech.entity.Student">
+        SELECT <include refid="columnMap"></include>
+        FROM `student`
+        WHERE 
+            id = #{id} 
+    </select>
+    
+    <select id="selectList" resultType="cn.orditech.entity.Student">
+        SELECT <include refid="columnMap"></include>
+        FROM `student`
+        WHERE 1=1
+            <if test="id!=null" > AND id = #{id}</if>
+            <if test="name!=null" > AND name = #{name}</if>
+            <if test="sex!=null" > AND sex = #{sex}</if>
+            <if test="school!=null" > AND school = #{school}</if>
+            <if test="birth!=null" > AND birth = #{birth}</if>
+            <if test="orgId!=null" > AND org_id = #{orgId}</if>
+            <if test="referrer!=null" > AND referrer = #{referrer}</if>
+            <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
+    </select>
+    <!--base operation end-->
+
+    <delete id="deleteByStudentId" parameterType="java.lang.Long">
+        DELETE FROM score WHERE student_id = #{studentId}
+    </delete>
+
+
+    <!--customize operation start-->
+</mapper>
+

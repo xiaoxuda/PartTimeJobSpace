@@ -70,4 +70,15 @@ public class AdminController {
         userService.update (user);
         return JsonResult.successResult (true).toString ();
     }
+
+    @RequestMapping("/deleteUser")
+    @ResponseBody
+    public String deleteUserByUserId(@RequestParam("userId") Long userId){
+        User user = userService.selectOne(userId);
+        if(user==null){
+            return JsonResult.failResult ("查询不到用户信息").toString ();
+        }
+        userService.delete(userId);
+        return JsonResult.successResult (true).toString ();
+    }
 }

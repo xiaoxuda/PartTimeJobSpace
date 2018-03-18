@@ -78,7 +78,8 @@
     });
 
     function parseParam(){
-        var department = $("#userDepartment").attr("value");
+//        var department = $("#userDepartment").attr("value");
+        var department = $("#userDepartment").val();
         if(department==""){
             alert("请选择所属部门");
             return;

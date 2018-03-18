@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +47,25 @@ public class TestController {
     private UserService userService;
 
 
+    @RequestMapping("/countDown")
+    public String countDownTest(Model model, HttpServletResponse response , HttpServletRequest request){
+        model.addAttribute("time",new Date().getTime());
+        Cookie[] cookies = request.getCookies();
+        for(Cookie cookie:cookies){
+            if(cookie.getName().equals("m")){
+                System.out.println("获取到了分钟="+cookie.getValue());
+            }
+        }
+        response.addCookie(new Cookie("m","10"));
+        response.addCookie(new Cookie("s","10"));
+
+        return "count_down";
+    }
+
     @RequestMapping("/startTest")
-    public String startTest (@RequestParam("id") Long id, Model model) {
+    public String startTest (@RequestParam("id") Long id,
+                             Model model,
+                             HttpServletResponse response) {
         TestPaper testPaper = testPaperService.selectOne (id);
         JSONArray questions = JSON.parseArray (testPaper.getQuestions ());
         Map<Long, JSONObject> questionsMap = Maps.newLinkedHashMap ();
@@ -62,6 +83,14 @@ public class TestController {
         }
         model.addAttribute ("testPaper", testPaper);
         model.addAttribute ("questions", questionsMap.values ());
+        //设置考试时间，m:分钟,n:秒，保存在cookie中
+        Cookie cookie = new Cookie("m","60");
+        cookie.setMaxAge(3600);
+        response.addCookie(cookie);
+        Cookie cookie2 = new Cookie("s","0");
+        cookie2.setMaxAge(3600);
+        response.addCookie(cookie2);
+
         return "do_test";
     }
 
@@ -97,7 +126,12 @@ public class TestController {
             boolean right = false;
             JSONObject json = answerMap.get (question.getId ());
             if (json != null) {
-                right = question.getAnswer ().equals (json.getString ("answer"));
+                String userAnswer = json.getString ("answer");
+                int index = userAnswer.lastIndexOf(",");
+                if(index > 0) {
+                    userAnswer = json.getString("answer").substring(0, json.getString("answer").length() - 1);
+                }
+                right = question.getAnswer ().equals (userAnswer);
             }
             if (right) {
                 score += quesiontMap.get (question.getId ()).getInteger ("score");

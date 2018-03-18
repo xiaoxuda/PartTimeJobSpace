@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据库基本操作 -->
+<mapper namespace="cn.orditech.dao.impl.ScoreDaoImpl">
+    <sql id="columnMap">
+            id as id,
+            student_id as studentId,
+            org_id as orgId,
+            course as course,
+            score as score,
+            perfect_score as perfectScore,
+            rank_class as rankClass,
+            rank_school as rankSchool,
+            test_date as testDate,
+            gmt_create as gmtCreate,
+            gmt_modified as gmtModified
+    </sql>
+    <!--base operation start-->
+    <insert id="insert" parameterType="cn.orditech.entity.Score" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO `score` (
+        id ,
+        student_id ,
+        org_id ,
+        course ,
+        score ,
+        perfect_score ,
+        rank_class ,
+        rank_school ,
+        test_date ,
+        gmt_create ,
+        gmt_modified
+        ) VALUES (
+        #{id} ,
+        #{studentId} ,
+        #{orgId} ,
+        #{course} ,
+        #{score} ,
+        #{perfectScore} ,
+        #{rankClass} ,
+        #{rankSchool} ,
+        #{testDate} ,
+        #{gmtCreate} ,
+        #{gmtModified}
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM `score`
+        WHERE
+        id = #{id}
+    </delete>
+
+    <update id="updateById" parameterType="cn.orditech.entity.Score">
+        UPDATE `score`
+        SET
+        student_id = #{studentId} ,
+        org_id = #{orgId} ,
+        course = #{course} ,
+        score = #{score} ,
+        perfect_score = #{perfectScore} ,
+        rank_class = #{rankClass} ,
+        rank_school = #{rankSchool} ,
+        test_date = #{testDate} ,
+        gmt_create = #{gmtCreate} ,
+        gmt_modified = #{gmtModified}
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateSelectiveById" parameterType="cn.orditech.entity.Score">
+        UPDATE `score`
+        SET
+        id = #{id}
+        <if test="studentId!=null" >,student_id = #{studentId}</if>
+        <if test="orgId!=null" >,org_id = #{orgId}</if>
+        <if test="course!=null" >,course = #{course}</if>
+        <if test="score!=null" >,score = #{score}</if>
+        <if test="perfectScore!=null" >,perfect_score = #{perfectScore}</if>
+        <if test="rankClass!=null" >,rank_class = #{rankClass}</if>
+        <if test="rankSchool!=null" >,rank_school = #{rankSchool}</if>
+        <if test="testDate!=null" >,test_date = #{testDate}</if>
+        <if test="gmtCreate!=null" >,gmt_create = #{gmtCreate}</if>
+        <if test="gmtModified!=null" >,gmt_modified = #{gmtModified}</if>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="selectOne" resultType="cn.orditech.entity.Score">
+        SELECT <include refid="columnMap"></include>
+        FROM `score`
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="selectList" resultType="cn.orditech.entity.Score">
+        SELECT <include refid="columnMap"></include>
+        FROM `score`
+        WHERE 1=1
+        <if test="id!=null" > AND id = #{id}</if>
+        <if test="studentId!=null" > AND student_id = #{studentId}</if>
+        <if test="orgId!=null" > AND org_id = #{orgId}</if>
+        <if test="course!=null" > AND course = #{course}</if>
+        <if test="score!=null" > AND score = #{score}</if>
+        <if test="perfectScore!=null" > AND perfect_score = #{perfectScore}</if>
+        <if test="rankClass!=null" > AND rank_class = #{rankClass}</if>
+        <if test="rankSchool!=null" > AND rank_school = #{rankSchool}</if>
+        <if test="testDate!=null" > AND test_date = #{testDate}</if>
+        <if test="gmtCreate!=null" > AND gmt_create = #{gmtCreate}</if>
+        <if test="gmtModified!=null" > AND gmt_modified = #{gmtModified}</if>
+    </select>
+    <!--base operation end-->
+
+    <!--customize operation start-->
+</mapper>
+
